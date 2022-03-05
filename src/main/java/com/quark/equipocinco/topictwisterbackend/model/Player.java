@@ -13,14 +13,9 @@ import java.util.List;
 @Builder
 public class Player {
     private String name;
-    private String surname;
     private String username;
     private String password;
     private String verificationCode;
-    private boolean connected;
     private boolean activated;
-    private boolean deleted;
-    private int numberOfVictories;
-    private int[] score;
-    private List<String> words;
+    private int wins;
 }

@@ -1,6 +1,5 @@
 package com.quark.equipocinco.topictwisterbackend.dto.response;
 
-import com.quark.equipocinco.topictwisterbackend.model.Player;
 import lombok.*;
 
 @AllArgsConstructor
@@ -8,7 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlayerResponseDTO extends Player {
+public class PlayerResponseDTO {
     private String id;
-    private String message;
+    private String name;
+    private int wins;
 }
