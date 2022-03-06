@@ -34,7 +34,6 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired MessageSource messageSource;
     @Autowired PlayerMapper playerMapper;
     @Autowired ValidatePlayer validatePlayer;
-    @Autowired PlayerIDService playerIDService;
     private Firestore db;
 
     public PlayerServiceImpl(Firestore db) {
