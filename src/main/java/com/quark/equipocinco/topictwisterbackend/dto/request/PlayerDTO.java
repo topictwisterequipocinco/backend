@@ -16,12 +16,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class PlayerDTO {
     @NotNull(message = "Nombre no puede estar vacìo.")
-    @Size(min = 4, max = 64, message = "El Nombre debe tener un tamaño entre 4 a 64 caracteres.")
+    @Size(min = 2, max = 15, message = "El Nombre debe tener un tamaño entre 2 a 15 caracteres.")
     private String name;
-
-    @NotNull(message = "Apellido no puede estar vacìo")
-    @Size(min = 4, max = 64, message = "El Apellido debe tener un tamaño entre 4 a 64 caracteres.")
-    private String surname;
 
     @NotNull(message = "Email no puede estar vacìo")
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
@@ -31,8 +27,5 @@ public class PlayerDTO {
     private String email;
 
     @NotNull(message = "Contraseña no puede estar vacìo")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
-            message = "Password invalido. Debe tener al menos una letra mayuscula, una letra minuscula," +
-                    "un numero, un caracter especial y tener una longitud minima de 8 caracteres")
     private String password;
 }

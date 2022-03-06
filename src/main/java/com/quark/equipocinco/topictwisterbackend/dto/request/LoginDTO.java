@@ -21,8 +21,5 @@ public class LoginDTO {
     private String email;
 
     @NotNull(message = "Contraseña no puede estar vacìo")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
-            message = "Password invalido. Debe tener al menos una letra mayuscula, una letra minuscula," +
-                    "un numero, un caracter especial y tener una longitud minima de 8 caracteres")
     private String password;
 }

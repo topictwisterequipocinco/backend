@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Player {
+    private String id;
     private String name;
     private String username;
     private String password;
-    private String verificationCode;
-    private boolean activated;
     private int wins;
 }

@@ -1,9 +1,27 @@
 package com.quark.equipocinco.topictwisterbackend.service;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.quark.equipocinco.topictwisterbackend.dto.request.LoginDTO;
 import com.quark.equipocinco.topictwisterbackend.dto.request.PlayerDTO;
-import com.quark.equipocinco.topictwisterbackend.dto.response.PlayerResponseDTO;
-import com.quark.equipocinco.topictwisterbackend.model.Player;
-import com.quark.equipocinco.topictwisterbackend.service.common.GenericService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
-public interface PlayerService extends GenericService<PlayerDTO, PlayerResponseDTO, Player> {
+import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
+
+public interface PlayerService {
+
+    ResponseEntity<?> get(@PathVariable("id") String id) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+
+    void update(@PathVariable("id")  String id) throws ExecutionException, InterruptedException;
+
+    ResponseEntity<?> create(@RequestBody @Valid PlayerDTO entity) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+
+    ResponseEntity<?> loginPlayer(@RequestBody @Valid LoginDTO loginDTO);
+
+    CollectionReference getCollectionDataBaseFirebase();
+
+    ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 }
