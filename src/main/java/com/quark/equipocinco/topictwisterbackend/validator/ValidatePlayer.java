@@ -6,7 +6,6 @@ import com.quark.equipocinco.topictwisterbackend.exception.PlayerException;
 import com.quark.equipocinco.topictwisterbackend.model.Player;
 import com.quark.equipocinco.topictwisterbackend.mapper.PlayerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import java.util.regex.Pattern;
 public class ValidatePlayer extends AbstractValidator{
 
     @Autowired PlayerMapper playerMapper;
-    @Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public boolean validPlayer(Player player) throws PlayerException {
@@ -51,8 +49,7 @@ public class ValidatePlayer extends AbstractValidator{
     }
 
     public boolean validateLogin(Player response, LoginDTO loginDTO) {
-        String encryptedPassword = bCryptPasswordEncoder.encode(loginDTO.getPassword());
-        return response.getPassword().equals(encryptedPassword);
+        return response.getPassword().equals(loginDTO.getPassword());
     }
 
 }

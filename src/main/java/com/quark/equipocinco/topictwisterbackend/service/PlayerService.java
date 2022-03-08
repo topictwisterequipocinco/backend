@@ -1,6 +1,5 @@
 package com.quark.equipocinco.topictwisterbackend.service;
 
-import com.google.cloud.firestore.CollectionReference;
 import com.quark.equipocinco.topictwisterbackend.dto.request.LoginDTO;
 import com.quark.equipocinco.topictwisterbackend.dto.request.PlayerDTO;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,8 @@ public interface PlayerService {
 
     ResponseEntity<?> create(@RequestBody @Valid PlayerDTO entity) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
-    ResponseEntity<?> loginPlayer(@RequestBody @Valid LoginDTO loginDTO);
-
-    CollectionReference getCollectionDataBaseFirebase();
+    ResponseEntity<?> loginPlayer(@RequestBody @Valid LoginDTO loginDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+
 }
