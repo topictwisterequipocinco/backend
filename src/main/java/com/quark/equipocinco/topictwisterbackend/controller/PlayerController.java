@@ -32,7 +32,7 @@ public class PlayerController{
         return playerService.create(playerDTO);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) throws Exception {
         return playerService.loginPlayer(loginDTO);
     }
