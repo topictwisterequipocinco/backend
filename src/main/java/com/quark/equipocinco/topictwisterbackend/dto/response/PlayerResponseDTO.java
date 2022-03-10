@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 public class PlayerResponseDTO {
-    private String id;
+    private int id;
     private String name;
     private int wins;
 }

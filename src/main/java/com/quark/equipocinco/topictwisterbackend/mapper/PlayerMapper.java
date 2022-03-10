@@ -32,7 +32,7 @@ public class PlayerMapper {
     public PlayerResponseDTO responsePlayerDtoToPlayer(Player response) {
         return PlayerResponseDTO.builder()
                 .name(response.getName())
-                .id(response.getId())
+                .id(Integer.parseInt(response.getId()))
                 .wins(response.getWins())
                 .build();
     }
@@ -40,7 +40,7 @@ public class PlayerMapper {
     public PlayerResponseDTO toResponsePlayerResponseDTO(Player player) {
         return PlayerResponseDTO.builder()
                 .name(player.getName())
-                .id(player.getId())
+                .id(Integer.parseInt(player.getId()))
                 .wins(player.getWins())
                 .build();
     }
