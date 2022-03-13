@@ -1,7 +1,7 @@
 package com.quark.equipocinco.topictwisterbackend.validator;
 
 import com.quark.equipocinco.topictwisterbackend.dto.request.LoginDTO;
-import com.quark.equipocinco.topictwisterbackend.dto.response.ResponseValidatorDto;
+import com.quark.equipocinco.topictwisterbackend.validator.response.ResponseValidator;
 import com.quark.equipocinco.topictwisterbackend.exception.PlayerException;
 import com.quark.equipocinco.topictwisterbackend.model.Player;
 import com.quark.equipocinco.topictwisterbackend.mapper.PlayerMapper;
@@ -20,15 +20,15 @@ public class ValidatePlayer extends AbstractValidator{
     @Override
     public boolean validPlayer(Player player) throws PlayerException {
         Map<String, String> list = getResponseText(player);
-        ResponseValidatorDto dto = getResultValidate(list);
+        ResponseValidator dto = getResultValidate(list);
         if(!dto.isResult()){throw new PlayerException(dto.getResponse());}
 
         return dto.isResult();
     }
 
 
-    private ResponseValidatorDto getResultValidate(Map<String, String> list) {
-        ResponseValidatorDto dto = new ResponseValidatorDto();
+    private ResponseValidator getResultValidate(Map<String, String> list) {
+        ResponseValidator dto = new ResponseValidator();
         dto.setResult(true);
         for (Map.Entry<String, String> ele : list.entrySet()) {
             if (!ele.getValue().equals("1")) {

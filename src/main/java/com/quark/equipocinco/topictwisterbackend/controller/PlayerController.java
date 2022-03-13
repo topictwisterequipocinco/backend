@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/player")
@@ -18,13 +17,13 @@ public class PlayerController{
     @Autowired PlayerService playerService;
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> get(@PathVariable("id") String id) throws Exception {
+    public ResponseEntity<?> get(@PathVariable("id") String id){
         return playerService.get(id);
     }
 
     @PutMapping(value = "/{data}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void update(@PathVariable("data") String data) throws ExecutionException, InterruptedException {
-        playerService.update(data);
+    public ResponseEntity<?> update(@PathVariable("data") String data){
+        return playerService.update(data);
     }
 
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})

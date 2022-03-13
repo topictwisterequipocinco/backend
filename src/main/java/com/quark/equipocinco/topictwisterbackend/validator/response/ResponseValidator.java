@@ -1,4 +1,4 @@
-package com.quark.equipocinco.topictwisterbackend.dto.response;
+package com.quark.equipocinco.topictwisterbackend.validator.response;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResponseValidatorDto {
+public class ResponseValidator {
     private boolean result;
     private String response;
 }

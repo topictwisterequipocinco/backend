@@ -7,6 +7,7 @@ import com.quark.equipocinco.topictwisterbackend.exception.PlayerException;
 import com.quark.equipocinco.topictwisterbackend.mapper.PlayerMapper;
 import com.quark.equipocinco.topictwisterbackend.model.Player;
 import com.quark.equipocinco.topictwisterbackend.service.PlayerService;
+import com.quark.equipocinco.topictwisterbackend.util.error.Errors;
 import com.quark.equipocinco.topictwisterbackend.validator.ValidatePlayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +23,14 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PlayerServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerServiceImpl.class);
     private static final int NEXT_ID = 1;
 
     @Autowired MessageSource messageSource;
     @Autowired PlayerMapper playerMapper;
     @Autowired ValidatePlayer validatePlayer;
     @Autowired PlayerDAO playerDAO;
+    @Autowired Errors errors;
 
     @Override
     public ResponseEntity<?> get(String id){
@@ -36,16 +38,24 @@ public class PlayerServiceImpl implements PlayerService {
             Player player = playerDAO.getPlayerByID(id);
             return ResponseEntity.status(HttpStatus.OK).body(playerMapper.responsePlayerDtoToPlayer(player));
         }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            errors.logError(messageSource.getMessage("player.isNotExists", null,null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("get.entity.failed", null,null));
         }
     }
 
     @Override
-    public void update(String id) throws ExecutionException, InterruptedException {
-        Player oldPlayer = playerDAO.getPlayerByID(id);
-        assert oldPlayer != null;
-        Player newPlayer = playerMapper.toUpdateResponseDTO(oldPlayer);
-        playerDAO.update(newPlayer);
+    public ResponseEntity<?> update(String id){
+        try {
+            Player oldPlayer = playerDAO.getPlayerByID(id);
+            Player newPlayer = playerMapper.toUpdateResponseDTO(oldPlayer);
+            playerDAO.update(newPlayer);
+            return ResponseEntity.status(HttpStatus.OK).body(messageSource.getMessage("player.update.success", new Object[] {id},null));
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            errors.logError(messageSource.getMessage("player.update.failed", new Object[] {id},null));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("player.update.failed", new Object[] {id},null));
+        }
     }
 
     @Override
@@ -53,15 +63,15 @@ public class PlayerServiceImpl implements PlayerService {
         if(!verifyIsExists(entity.getEmail())){
             return getCreatePlayerResponseDTO(entity);
         }else {
-            logger.error(messageSource.getMessage("player.isExists", null,null));
-            System.out.println(messageSource.getMessage("player.isExists", null,null));
+            LOGGER.error(messageSource.getMessage("player.isExists", null,null));
+            errors.logError(messageSource.getMessage("player.isExists", null,null));
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("player.isExists",null, null));
         }
     }
 
     @Override
-    public ResponseEntity<?> loginPlayer(LoginDTO loginDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Player responseDTO = getLoginPlayer(loginDTO);
+    public ResponseEntity<?> loginPlayer(LoginDTO loginDTO) throws ExecutionException, InterruptedException {
+        Player responseDTO = playerDAO.getPlayer(loginDTO);
         if(validatePlayer.validateLogin(responseDTO, loginDTO)){
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.responsePlayerDtoToPlayer(responseDTO));
         }else {
@@ -96,17 +106,10 @@ public class PlayerServiceImpl implements PlayerService {
             playerDAO.create(player);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.toResponsePlayerResponseDTO(player));
         }catch (PlayerException | ExecutionException | InterruptedException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            logger.error(e.getMessage());
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
+            errors.logError(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("player.created.failed", new Object[] {e.getMessage()}, null));
         }
-    }
-
-    private Player getLoginPlayer(LoginDTO loginDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        for (Player element: playerDAO.getAllEntities()) {
-            if(element.getUsername().equals(loginDTO.getEmail())) {return element;}
-        }
-        return null;
     }
 
     private int getLastId() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
