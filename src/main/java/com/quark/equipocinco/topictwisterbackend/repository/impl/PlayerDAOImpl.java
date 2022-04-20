@@ -3,7 +3,6 @@ package com.quark.equipocinco.topictwisterbackend.repository.impl;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.quark.equipocinco.topictwisterbackend.dto.request.LoginDTO;
 import com.quark.equipocinco.topictwisterbackend.model.Player;
 import com.quark.equipocinco.topictwisterbackend.repository.PlayerDAO;
 import com.quark.equipocinco.topictwisterbackend.util.error.Errors;
@@ -74,9 +73,8 @@ public class PlayerDAOImpl implements PlayerDAO {
     }
 
     @Override
-    public Player getPlayer(LoginDTO loginDTO) throws ExecutionException, InterruptedException {
-        ApiFuture<QuerySnapshot> future =
-                getCollectionDataBaseFirebase().whereEqualTo("username", loginDTO.getEmail()).get();
+    public Player getPlayer(String username) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("username", username).get();
         QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST_PLAYER_ARRAY);
         return document.toObject(Player.class);
     }

@@ -70,13 +70,16 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseEntity<?> loginPlayer(LoginDTO loginDTO) throws ExecutionException, InterruptedException {
-        Player responseDTO = playerDAO.getPlayer(loginDTO);
-        if(validatePlayer.validateLogin(responseDTO, loginDTO)){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.responsePlayerDtoToPlayer(responseDTO));
-        }else {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(messageSource.getMessage("player.login.failed",null, null));
+    public ResponseEntity<?> loginPlayer(LoginDTO loginDTO) {
+        try{
+            Player responseDTO = playerDAO.getPlayer(loginDTO.getEmail());
+            if(validatePlayer.validateLogin(responseDTO, loginDTO)){
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.responsePlayerDtoToPlayer(responseDTO));
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(messageSource.getMessage("player.login.notExists", new Object[] {loginDTO.getEmail()}, null));
         }
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(messageSource.getMessage("player.login.failed",null, null));
     }
 
     @Override

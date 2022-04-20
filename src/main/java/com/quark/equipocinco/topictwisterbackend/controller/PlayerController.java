@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/player")
@@ -27,12 +29,12 @@ public class PlayerController{
     }
 
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> create(@RequestBody @Valid PlayerDTO playerDTO) throws Exception {
+    public ResponseEntity<?> create(@RequestBody @Valid PlayerDTO playerDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return playerService.create(playerDTO);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) throws Exception {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) {
         return playerService.loginPlayer(loginDTO);
     }
 
