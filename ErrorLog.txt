@@ -1,2 +1,1 @@
-El Perfil del Player ya existe en nuestra base de datos.
-El Perfil del Player ya existe en nuestra base de datos.
+"This player is not exists."
