@@ -1,6 +1,7 @@
 package com.quarke5.ttplayer.repository;
 
 import com.google.cloud.firestore.WriteResult;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.model.Player;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +16,12 @@ public interface PlayerDAO {
 
     WriteResult create(Player player) throws ExecutionException, InterruptedException;
 
+    WriteResult createNickNameDto(LoginNicknameDTO loginNicknameDTO) throws ExecutionException, InterruptedException;
+
     List<Player> getAllEntities() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     Player getPlayer(String username) throws ExecutionException, InterruptedException;
+
+    Player getPlayerNickname(String nickname) throws ExecutionException, InterruptedException;
+
 }

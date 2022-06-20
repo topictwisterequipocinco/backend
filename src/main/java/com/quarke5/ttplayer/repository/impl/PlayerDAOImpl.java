@@ -3,6 +3,7 @@ package com.quarke5.ttplayer.repository.impl;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.model.Player;
 import com.quarke5.ttplayer.repository.PlayerDAO;
 import com.quarke5.ttplayer.util.error.Errors;
@@ -62,6 +63,14 @@ public class PlayerDAOImpl implements PlayerDAO {
         return null;
     }
 
+    @Override
+    public WriteResult createNickNameDto(LoginNicknameDTO loginNicknameDTO) throws ExecutionException, InterruptedException {
+        ApiFuture<WriteResult> collectionsApiFuture = db.collection(getCollectionDataBaseFirebase().getId())
+                .document(loginNicknameDTO.getId()).set(loginNicknameDTO);
+        if(collectionsApiFuture.isDone()) return collectionsApiFuture.get();
+        return null;
+    }
+
     public List<Player> getAllEntities() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         List<Player> list = new ArrayList<>();
         ApiFuture<QuerySnapshot> query = getCollectionDataBaseFirebase().get();
@@ -77,6 +86,13 @@ public class PlayerDAOImpl implements PlayerDAO {
     @Override
     public Player getPlayer(String username) throws ExecutionException, InterruptedException {
         ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("username", username).get();
+        QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST_PLAYER_ARRAY);
+        return document.toObject(Player.class);
+    }
+
+    @Override
+    public Player getPlayerNickname(String nickname) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("name", nickname).get();
         QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST_PLAYER_ARRAY);
         return document.toObject(Player.class);
     }

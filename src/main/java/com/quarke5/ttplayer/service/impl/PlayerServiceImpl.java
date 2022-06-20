@@ -2,6 +2,7 @@ package com.quarke5.ttplayer.service.impl;
 
 import com.google.cloud.firestore.WriteResult;
 import com.quarke5.ttplayer.dto.request.LoginDTO;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.repository.PlayerDAO;
 import com.quarke5.ttplayer.dto.request.PlayerDTO;
 import com.quarke5.ttplayer.exception.PlayerException;
@@ -86,6 +87,19 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public ResponseEntity<?> loginPlayerNickname(LoginNicknameDTO loginNicknameDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        try{
+            Player responseDTO = playerDAO.getPlayerNickname(loginNicknameDTO.getNickname());
+            if(validatePlayer.validateLoginNickname(responseDTO, loginNicknameDTO)){
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.responsePlayerDtoToPlayer(responseDTO));
+            }
+        }catch (Exception e){
+            return getCreatePlayerResponseDTONickname(loginNicknameDTO);
+        }
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(messageSource.getMessage("player.login.failed",null, null));
+    }
+
+    @Override
     public ResponseEntity<?> getAll(){
         try {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.toResponsePlayerList(playerDAO.getAllEntities()));
@@ -110,10 +124,21 @@ public class PlayerServiceImpl implements PlayerService {
             Player player = playerMapper.toModel(entity, getLastId());
             validatePlayer.validPlayer(player);
             WriteResult result = playerDAO.create(player);
-            System.out.println(result);
             emailGoogleService.sendEmailNewPlayer(player);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerMapper.responsePlayerDtoToPlayer(player));
+            return ResponseEntity.status(HttpStatus.CREATED).body(playerMapper.responsePlayerDtoToPlayer(player));
         }catch (PlayerException | ExecutionException | InterruptedException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            LOGGER.error(e.getMessage());
+            errors.logError(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("player.created.failed", new Object[] {e.getMessage()}, null));
+        }
+    }
+
+    private ResponseEntity<?> getCreatePlayerResponseDTONickname(LoginNicknameDTO loginNicknameDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        try{
+            loginNicknameDTO = playerMapper.updateNicknameDto(loginNicknameDTO, getLastId());
+            WriteResult result = playerDAO.createNickNameDto(loginNicknameDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(playerMapper.responsePlayerDtoToLoginNicknameDTO(loginNicknameDTO));
+        }catch (ExecutionException | InterruptedException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             LOGGER.error(e.getMessage());
             errors.logError(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("player.created.failed", new Object[] {e.getMessage()}, null));

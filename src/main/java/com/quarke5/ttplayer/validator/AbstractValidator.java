@@ -1,5 +1,6 @@
 package com.quarke5.ttplayer.validator;
 
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.exception.PlayerException;
 import com.quarke5.ttplayer.model.Player;
 
@@ -10,4 +11,6 @@ public abstract class AbstractValidator extends Exception {
     protected static final String REGEX_EMAIL = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
     public boolean validPlayer(Player player) throws PlayerException { return false; }
+
+    public abstract boolean validateLoginNickname(Player responseDTO, LoginNicknameDTO loginNicknameDTO);
 }

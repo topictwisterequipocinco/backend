@@ -1,6 +1,7 @@
 package com.quarke5.ttplayer.service;
 
 import com.quarke5.ttplayer.dto.request.LoginDTO;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.dto.request.PlayerDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ public interface PlayerService {
     ResponseEntity<?> create(@RequestBody @Valid PlayerDTO entity) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     ResponseEntity<?> loginPlayer(@RequestBody @Valid LoginDTO loginDTO);
+
+    ResponseEntity<?> loginPlayerNickname(LoginNicknameDTO loginNicknameDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 

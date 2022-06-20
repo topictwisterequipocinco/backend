@@ -2,6 +2,7 @@ package com.quarke5.ttplayer.controller;
 
 import com.quarke5.ttplayer.controller.interfaces.Controller;
 import com.quarke5.ttplayer.dto.request.LoginDTO;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.dto.request.PlayerDTO;
 import com.quarke5.ttplayer.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,11 @@ public class PlayerController implements Controller<PlayerDTO> {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) {
         return playerService.loginPlayer(loginDTO);
+    }
+
+    @PostMapping("/login/nickname")
+    public ResponseEntity<?> login(@RequestBody @Valid LoginNicknameDTO loginNicknameDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        return playerService.loginPlayerNickname(loginNicknameDTO);
     }
 
 }

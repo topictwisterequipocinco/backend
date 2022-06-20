@@ -1,5 +1,6 @@
 package com.quarke5.ttplayer.mapper;
 
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.dto.request.PlayerDTO;
 import com.quarke5.ttplayer.dto.response.PlayerResponseDTO;
 import com.quarke5.ttplayer.model.Player;
@@ -15,13 +16,14 @@ public class PlayerMapper {
     private static int SUM_ONE = 1;
 
     public Player toModel(PlayerDTO dto, int id) {
-        return Player.builder()
+        Player player = Player.builder()
                 .id(String.valueOf(id))
                 .name(dto.getName())
                 .username(dto.getEmail())
                 .password(dto.getPassword())
                 .wins(NUMBERS_VICTORY_INIT)
                 .build();
+        return player;
     }
 
     public Player toUpdateResponseDTO(Player entity) {
@@ -44,5 +46,20 @@ public class PlayerMapper {
             dtoList.add(dto);
         }
         return dtoList;
+    }
+
+
+    public LoginNicknameDTO updateNicknameDto(LoginNicknameDTO loginNicknameDTO, int lastId) {
+        loginNicknameDTO.setId(String.valueOf(lastId));
+        loginNicknameDTO.setWins("0");
+        return loginNicknameDTO;
+    }
+
+    public PlayerResponseDTO responsePlayerDtoToLoginNicknameDTO(LoginNicknameDTO dto) {
+        return PlayerResponseDTO.builder()
+                .name(dto.getNickname())
+                .id(Integer.parseInt(dto.getId()))
+                .wins(Integer.parseInt(dto.getWins()))
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.quarke5.ttplayer.validator;
 
 import com.quarke5.ttplayer.dto.request.LoginDTO;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.validator.response.ResponseValidator;
 import com.quarke5.ttplayer.exception.PlayerException;
 import com.quarke5.ttplayer.model.Player;
@@ -25,6 +26,11 @@ public class ValidatePlayer extends AbstractValidator{
         if(!dto.isResult()){throw new PlayerException(dto.getResponse());}
 
         return dto.isResult();
+    }
+
+    @Override
+    public boolean validateLoginNickname(Player responseDTO, LoginNicknameDTO loginNicknameDTO) {
+        return responseDTO.getName().equals(loginNicknameDTO.getNickname());
     }
 
 
