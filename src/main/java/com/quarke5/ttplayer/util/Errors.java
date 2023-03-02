@@ -1,4 +1,4 @@
-package com.quarke5.ttplayer.util.error;
+package com.quarke5.ttplayer.util;
 
 import org.springframework.stereotype.Component;
 

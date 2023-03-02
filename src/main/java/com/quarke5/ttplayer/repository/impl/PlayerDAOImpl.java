@@ -6,7 +6,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
 import com.quarke5.ttplayer.model.Player;
 import com.quarke5.ttplayer.repository.PlayerDAO;
-import com.quarke5.ttplayer.util.error.Errors;
+import com.quarke5.ttplayer.util.Errors;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -10,7 +10,7 @@ import com.quarke5.ttplayer.mapper.PlayerMapper;
 import com.quarke5.ttplayer.model.Player;
 import com.quarke5.ttplayer.service.PlayerService;
 import com.quarke5.ttplayer.service.email.EmailGoogleService;
-import com.quarke5.ttplayer.util.error.Errors;
+import com.quarke5.ttplayer.util.Errors;
 import com.quarke5.ttplayer.validator.ValidatePlayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

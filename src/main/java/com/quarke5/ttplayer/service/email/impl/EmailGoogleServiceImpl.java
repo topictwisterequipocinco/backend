@@ -31,7 +31,7 @@ public class EmailGoogleServiceImpl implements EmailGoogleService {
     @Override
     public void sendEmailNewPlayer(Player player) {
         LOGGER.info("Construyendo el cuerpo del mail a enviar al nuevo Player...");
-        sendEmail(emailMapper.toModelEmailCreate(player));
+        sendEmail(emailMapper.toModelEmailPlayerCreate(player));
     }
 
     private void sendEmail(ResponseEmailDTO responseEmailDTO){
