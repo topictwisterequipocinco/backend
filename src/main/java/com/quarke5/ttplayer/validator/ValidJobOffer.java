@@ -1,6 +1,8 @@
 package com.quarke5.ttplayer.validator;
 
-import com.utn.bolsadetrabajo.model.JobOffer;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
+import com.quarke5.ttplayer.model.JobOffer;
+import com.quarke5.ttplayer.model.Player;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -19,4 +21,8 @@ public class ValidJobOffer extends AbstractValidator {
         return response;
     }
 
+    @Override
+    public boolean validateLoginNickname(Player responseDTO, LoginNicknameDTO loginNicknameDTO) {
+        return false;
+    }
 }

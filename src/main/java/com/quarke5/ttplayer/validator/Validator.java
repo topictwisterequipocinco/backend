@@ -1,12 +1,13 @@
 package com.quarke5.ttplayer.validator;
 
-import com.utn.bolsadetrabajo.dto.request.ForgotDTO;
-import com.utn.bolsadetrabajo.exception.CategoryException;
-import com.utn.bolsadetrabajo.exception.JobOfferException;
-import com.utn.bolsadetrabajo.exception.PersonException;
-import com.utn.bolsadetrabajo.exception.UserException;
-import com.utn.bolsadetrabajo.model.*;
-import com.utn.bolsadetrabajo.model.enums.Roles;
+import com.quarke5.ttplayer.dto.request.ForgotDTO;
+import com.quarke5.ttplayer.dto.request.LoginNicknameDTO;
+import com.quarke5.ttplayer.exception.CategoryException;
+import com.quarke5.ttplayer.exception.JobOfferException;
+import com.quarke5.ttplayer.exception.PersonException;
+import com.quarke5.ttplayer.exception.UserException;
+import com.quarke5.ttplayer.model.*;
+import com.quarke5.ttplayer.model.enums.Roles;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ import java.util.regex.Pattern;
 
 @Component
 public class Validator extends AbstractValidator {
+
+    @Override
+    public boolean validateLoginNickname(Player responseDTO, LoginNicknameDTO loginNicknameDTO) {
+        return false;
+    }
 
     public boolean validPerson(Person per) throws PersonException {
         Map<String, String> list = getResponseText(per);

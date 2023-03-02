@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Person Controller", description = "Controlador con los endpoints que actúan sobre las Person.")
@@ -55,7 +57,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @GetMapping("/identification/{identification}")
-    public ResponseEntity<?> getByDni(@PathVariable String identification){
+    public ResponseEntity<?> getByDni(@PathVariable String identification) throws ExecutionException, InterruptedException {
         return readableService.getByIdentification(identification);
     }
 
@@ -82,7 +84,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO personDTO) throws PersonException {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO personDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.update(id, personDTO);
     }
 
@@ -116,7 +118,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @GetMapping("/")
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.getAll();
     }
 
@@ -132,7 +134,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @GetMapping("/applicants")
-    public ResponseEntity<?> getAllApplicant(@RequestParam(name = "page",defaultValue = "0") int page) {
+    public ResponseEntity<?> getAllApplicant(@RequestParam(name = "page",defaultValue = "0") int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.getAllApplicant(page);
     }
 
@@ -148,7 +150,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @GetMapping("/publishers")
-    public ResponseEntity<?> getAllPublisher(@RequestParam(name = "page",defaultValue = "0") int page) {
+    public ResponseEntity<?> getAllPublisher(@RequestParam(name = "page",defaultValue = "0") int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.getAllPublisher(page);
     }
 
@@ -165,7 +167,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> create(@RequestBody @Valid PersonDTO personDTO) throws PersonException {
+    public ResponseEntity<?> create(@RequestBody @Valid PersonDTO personDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.update(0L, personDTO);
     }
 

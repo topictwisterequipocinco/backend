@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class ReadableServiceImpl implements Readable {
 
@@ -42,8 +44,8 @@ public class ReadableServiceImpl implements Readable {
     }
 
     @Override
-    public ResponseEntity<?> getByIdentification(String identification) {
-        Person person = repository.findByidentification(identification);
+    public ResponseEntity<?> getByIdentification(String identification) throws ExecutionException, InterruptedException {
+        Person person = repository.getEntity(identification);
         if (person.getUser().getRole().getRole().equals(Roles.APPLICANT)) {
             return applicantService.sendGetPersonByRequest(person, Long.valueOf(identification));
         } else if (person.getUser().getRole().getRole().equals(Roles.PUBLISHER)) {

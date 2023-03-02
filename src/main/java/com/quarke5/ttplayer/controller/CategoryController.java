@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Category Controller", description = "Controlador con los endpoints que actúan sobre las Categorias.")
@@ -54,7 +56,7 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryDTO categoryDTO) throws PersonException {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryDTO categoryDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return categoryService.update(id, categoryDTO);
     }
 
@@ -88,7 +90,7 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> create(@RequestBody @Valid CategoryDTO categoryDTO) throws PersonException {
+    public ResponseEntity<?> create(@RequestBody @Valid CategoryDTO categoryDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return categoryService.update(0L, categoryDTO);
     }
 

@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class FlutterServiceImpl implements FlutterService, Urls {
@@ -43,7 +44,7 @@ public class FlutterServiceImpl implements FlutterService, Urls {
     @Autowired private RestTemplate restTemplate;
 
     @Override
-    public ResponseEntity<?> createJwtByFlutter(AuthenticationRequest authenticationRequest) {
+    public ResponseEntity<?> createJwtByFlutter(AuthenticationRequest authenticationRequest) throws ExecutionException, InterruptedException {
         User user;
         try {
             user = userService.findByUsernameByStateActive(authenticationRequest.getUsername());

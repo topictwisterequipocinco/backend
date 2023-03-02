@@ -6,9 +6,11 @@ import com.quarke5.ttplayer.dto.request.PersonDTO;
 import com.quarke5.ttplayer.security.authentication.AuthenticationRequest;
 import org.springframework.http.ResponseEntity;
 
+import java.util.concurrent.ExecutionException;
+
 public interface FlutterService {
 
-    ResponseEntity<?> createJwtByFlutter(AuthenticationRequest authenticationRequest);
+    ResponseEntity<?> createJwtByFlutter(AuthenticationRequest authenticationRequest) throws ExecutionException, InterruptedException;
 
     ResponseEntity<?> logoutUserFlutter(AuthenticationRequest authenticationRequest);
 

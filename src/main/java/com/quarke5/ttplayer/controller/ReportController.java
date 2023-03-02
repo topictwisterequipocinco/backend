@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Report Controller", description = "Controlador con los endpoints que actúan sobre los Report.")
@@ -34,7 +36,7 @@ public class ReportController implements Messages {
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @GetMapping("/applicant-excel")
-    public void exportToExcelApplicant(HttpServletResponse response) throws IOException {
+    public void exportToExcelApplicant(HttpServletResponse response) throws IOException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         reportService.getApplicantExcel(response);
     }
 

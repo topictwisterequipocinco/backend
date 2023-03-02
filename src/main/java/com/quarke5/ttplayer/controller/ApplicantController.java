@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Applicant Controller", description = "Controlador con los endpoints que actúan sobre los Applicants.")
@@ -35,7 +37,7 @@ public class ApplicantController implements Messages, Creators<PersonDTO> {
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO applicantDTO) throws PersonException {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO applicantDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return applicantService.update(id, applicantDTO);
     }
 
@@ -52,7 +54,7 @@ public class ApplicantController implements Messages, Creators<PersonDTO> {
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> create(@RequestBody @Valid PersonDTO applicantDTO) throws PersonException {
+    public ResponseEntity<?> create(@RequestBody @Valid PersonDTO applicantDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return applicantService.update(0L, applicantDTO);
     }
 }
