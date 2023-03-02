@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -46,7 +48,7 @@ public class GenerateListTypePerson {
         return links;
     }*/
 
-    public List<Link> generateApplicantLinks(Page<ResponsePersonDto> page, int numberPage) {
+    public List<Link> generateApplicantLinks(Page<ResponsePersonDto> page, int numberPage) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         List<Link> links = new ArrayList<>();
         if(page.getContent().isEmpty()){ throw new ResponseStatusException(HttpStatus.NO_CONTENT); }
         links.add(linkTo(methodOn(PersonController.class).getAllApplicant(numberPage)).withSelfRel());
@@ -60,7 +62,7 @@ public class GenerateListTypePerson {
         return links;
     }
 
-    public List<Link> generatePublisherLinks(Page<ResponsePersonDto> page, int numberPage) {
+    public List<Link> generatePublisherLinks(Page<ResponsePersonDto> page, int numberPage) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         List<Link> links = new ArrayList<>();
         if(page.getContent().isEmpty()){ throw new ResponseStatusException(HttpStatus.NO_CONTENT); }
         links.add(linkTo(methodOn(PersonController.class).getAllPublisher(numberPage)).withSelfRel());
