@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "JobOffer Controller", description = "Controlador con los endpoints que actúan sobre los JobOffer.")
-@RequestMapping("joboffer")
+@RequestMapping("/joboffer")
 public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
 
     @Autowired private JobOfferService jobOfferService;

@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Applicant Controller", description = "Controlador con los endpoints que actúan sobre los Applicants.")
-@RequestMapping("applicant")
+@RequestMapping("/applicant")
 public class ApplicantController implements Controllers<PersonDTO>, Messages, Creators<PersonDTO> {
 
     @Autowired ApplicantService applicantService;

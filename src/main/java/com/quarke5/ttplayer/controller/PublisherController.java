@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Publisher Controller", description = "Controlador con los endpoints que actúan sobre los Publisher.")
-@RequestMapping("publisher")
+@RequestMapping("/publisher")
 public class PublisherController implements Controllers<PersonDTO>, Messages, Creators<PersonDTO> {
 
     @Autowired

@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Person Controller", description = "Controlador con los endpoints que actúan sobre las Person.")
-@RequestMapping("person")
+@RequestMapping("/person")
 public class PersonController implements Controllers<PersonDTO>, Messages, Creators<PersonDTO> {
 
     @Autowired Readable readableService;

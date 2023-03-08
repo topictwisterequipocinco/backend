@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(value = "User Controller", description = "Controlador de User.")
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController implements Messages {
 
     @Autowired private UserService service;

@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Report Controller", description = "Controlador con los endpoints que actúan sobre los Report.")
-@RequestMapping("reports")
+@RequestMapping("/reports")
 public class ReportController implements Messages {
     @Autowired
     ReportService reportService;

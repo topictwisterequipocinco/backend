@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @Api(value = "Authentication Controller", description = "Controlador de Autentificaciones.")
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthenticationController implements Messages {
 
     @Autowired private AuthenticationService authenticationService;
