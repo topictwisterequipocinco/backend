@@ -16,7 +16,7 @@ import java.util.List;
 @Entity(name = "PUBLISHER")
 @SQLDelete(sql = "UPDATE PERSON SET deleted=true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Publisher extends Person{
+public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

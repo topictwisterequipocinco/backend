@@ -19,7 +19,7 @@ import java.util.List;
 @Entity(name = "APPLICANT")
 @SQLDelete(sql = "UPDATE PERSON SET deleted=true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Applicant extends Person{
+public class Applicant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

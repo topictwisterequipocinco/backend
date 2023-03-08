@@ -74,7 +74,7 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
     })
     @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> delete(@PathVariable Long id){
-        return categoryService.delete(id);
+        return null;
     }
 
     @Override

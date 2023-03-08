@@ -55,16 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-        try{
-            Category category = getCategory(id);
-            category.setDeleted(true);
-            categoryRepository.update(category);
-            return ResponseEntity.status(HttpStatus.OK).body(messageSource.getMessage("category.delete.success", new Object[] {id},null));
-        }catch (Exception e){
-            LOGGER.error(messageSource.getMessage("category.delete.failed " + e.getMessage(), new Object[] {id}, null));
-            errors.logError(messageSource.getMessage("category.delete.failed " + e.getMessage(), new Object[] {id}, null));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("category.delete.failed", new Object[] {id}, null));
-        }
+        return null;
     }
 
     @Override
