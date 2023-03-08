@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(value = "JobOffer Controller", description = "Controlador con los endpoints que actúan sobre los JobOffer.")
-@RequestMapping("/report-lists")
+@RequestMapping("report-lists")
 public class ReportListsController implements Messages {
 
     @Autowired

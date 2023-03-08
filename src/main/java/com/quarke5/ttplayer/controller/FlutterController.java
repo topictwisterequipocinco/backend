@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @Api(value = "JobOffer Controller", description = "Controlador con los endpoints que actúan sobre los JobOffer.")
-@RequestMapping("/flutter")
+@RequestMapping("flutter")
 public class FlutterController {
 
     @Autowired

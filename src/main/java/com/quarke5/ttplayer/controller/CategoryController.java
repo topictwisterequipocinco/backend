@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Api(value = "Category Controller", description = "Controlador con los endpoints que actúan sobre las Categorias.")
-@RequestMapping("/category")
+@RequestMapping("category")
 public class CategoryController implements Controllers<CategoryDTO>, Messages, Creators<CategoryDTO> {
 
     @Autowired private CategoryService categoryService;
