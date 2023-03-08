@@ -35,7 +35,8 @@ public class ReadableServiceImpl implements Readable {
     public ResponseEntity<?> getById(Long id) {
         Person person = repository.findById(String.valueOf(id));
         if (person.getUser().getRole().getRole().equals(Roles.APPLICANT)) {
-            return applicantService.sendGetPersonByRequest(person, id);
+            //return applicantService.sendGetPersonByRequest(person, id);
+            return null;
         } else if (person.getUser().getRole().getRole().equals(Roles.PUBLISHER)) {
             return publisherService.sendGetPersonByRequest(person, id);
         } else {
@@ -47,7 +48,8 @@ public class ReadableServiceImpl implements Readable {
     public ResponseEntity<?> getByIdentification(String identification) throws ExecutionException, InterruptedException {
         Person person = repository.getEntity(identification);
         if (person.getUser().getRole().getRole().equals(Roles.APPLICANT)) {
-            return applicantService.sendGetPersonByRequest(person, Long.valueOf(identification));
+            //return applicantService.sendGetPersonByRequest(person, Long.valueOf(identification));
+            return null;
         } else if (person.getUser().getRole().getRole().equals(Roles.PUBLISHER)) {
             return publisherService.sendGetPersonByRequest(person, Long.valueOf(identification));
         } else {
@@ -60,7 +62,8 @@ public class ReadableServiceImpl implements Readable {
         User user = getUserById(id);
         Person person = repository.findByUser(user);
         if (person.getUser().getRole().getRole().equals(Roles.APPLICANT)) {
-            return applicantService.getByIdUserApp(user);
+            //return applicantService.getByIdUserApp(user);
+            return null;
         } else if (person.getUser().getRole().getRole().equals(Roles.PUBLISHER)) {
             return publisherService.getByIdUserPub(user);
         } else {
@@ -69,7 +72,7 @@ public class ReadableServiceImpl implements Readable {
     }
 
     @Override
-    public Applicant getPersonTypeApplicantByIdUser(Long id) {
+    public Applicant getPersonTypeApplicantByIdUser(Long id) throws ExecutionException, InterruptedException {
         User user = getUserById(id);
         return applicantService.getApplicantByUser(user);
     }

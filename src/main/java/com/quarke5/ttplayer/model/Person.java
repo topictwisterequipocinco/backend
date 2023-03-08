@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @Entity(name = "PERSON")
-@Inheritance(strategy = InheritanceType.JOINED)
 @SQLDelete(sql = "UPDATE PERSON SET deleted=true WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Person {

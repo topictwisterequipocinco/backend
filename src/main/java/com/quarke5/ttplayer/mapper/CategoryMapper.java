@@ -27,10 +27,6 @@ public class CategoryMapper {
                 .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
-                .createDay(category.getCreateDay())
-                .modifiedDay(category.getModifiedDay())
-                .deletedDay(category.getDeletedDay())
-                .deleted(category.isDeleted())
                 .message(message)
                 .build();
         return res;
@@ -39,7 +35,6 @@ public class CategoryMapper {
     public Category toModelUpdate(Category category, CategoryDTO dto) {
         category.setName(dto.getName());
         category.setDescription(dto.getDescription());
-        category.setModifiedDay(LocalDate.now());
         return category;
     }
 

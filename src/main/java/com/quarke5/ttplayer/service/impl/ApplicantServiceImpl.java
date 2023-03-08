@@ -2,18 +2,16 @@ package com.quarke5.ttplayer.service.impl;
 
 import com.google.cloud.firestore.WriteResult;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
-import com.quarke5.ttplayer.dto.request.PlayerDTO;
 import com.quarke5.ttplayer.exception.PersonException;
-import com.quarke5.ttplayer.exception.PlayerException;
 import com.quarke5.ttplayer.mapper.ApplicantMapper;
 import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.Person;
-import com.quarke5.ttplayer.model.Player;
 import com.quarke5.ttplayer.model.User;
 import com.quarke5.ttplayer.model.enums.State;
 import com.quarke5.ttplayer.repository.impl.ApplicantDAO;
-import com.quarke5.ttplayer.service.emails.EmailGoogleService;
+import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import com.quarke5.ttplayer.service.interfaces.ApplicantService;
+import com.quarke5.ttplayer.service.interfaces.UserService;
 import com.quarke5.ttplayer.util.Errors;
 import com.quarke5.ttplayer.validator.Validator;
 import org.slf4j.Logger;
@@ -34,16 +32,18 @@ public class ApplicantServiceImpl implements ApplicantService {
     private static final int NEXT_ID = 1;
 
     @Autowired private ApplicantDAO repository;
-    @Autowired private EmailGoogleService emailGoogleService;
+    @Autowired private EmailsGoogle emailGoogleService;
+
+    @Autowired private UserService userService;
     @Autowired private ApplicantMapper applicantMapper;
     @Autowired private MessageSource messageSource;
     @Autowired private Validator validator;
     @Autowired private Errors errors;
 
     @Override
-    public ResponseEntity<?> sendGetPersonByRequest(Person person, Long id){
+    public ResponseEntity<?> sendGetPersonByRequest(Long id){
         try{
-            Applicant applicant = getApplicant(person.getId());
+            Applicant applicant = getApplicant(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(applicantMapper.toResponseApplicant(applicant, messageSource.getMessage("applicant.response.object.success", null,null)));
         }catch (Exception e){
             LOGGER.error(messageSource.getMessage("applicant.search.failed " + e.getMessage(), new Object[] {id}, null));
@@ -73,14 +73,15 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public ResponseEntity<?> getByIdUserApp(User user) {
+    public ResponseEntity<?> getByIdUserApp(Long id) {
         try{
+            User user = userService.findByIdUser(id);
             Applicant applicant = repository.findByUser(user);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(applicantMapper.toResponseApplicant(applicant, messageSource.getMessage("applicant.response.object.success", null,null)));
         }catch (Exception e){
-            LOGGER.error(messageSource.getMessage("applicant.search.failed " + e.getMessage(), new Object[] {user.getUserId()}, null));
-            errors.logError(messageSource.getMessage("applicant.search.failed " + e.getMessage(), new Object[] {user.getUserId()}, null));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("applicant.search.failed", new Object[] {user.getUserId()}, null));
+            LOGGER.error("No existe la cuenta de Applicant con id: " + id);
+            errors.logError("No existe la cuenta de Applicant con id: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("applicant.search.failed", new Object[] {id}, null));
         }
     }
 
@@ -95,14 +96,35 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Applicant getApplicantByUser(User user) {
+    public Applicant getApplicantByUser(User user) throws ExecutionException, InterruptedException {
         return repository.findByUser(user);
+    }
+
+    @Override
+    public ResponseEntity<?> sendGetPersonByIdentification(String identification) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> sendGetPersonByIdRequest(Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(getApplicant(id));
+    }
+
+    @Override
+    public ResponseEntity<?> getAllApplicant() {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(repository.getAllEntities());
+        }catch (Exception e){
+            LOGGER.error(messageSource.getMessage("person.all.failed " + e.getMessage(),null, null));
+            errors.logError(messageSource.getMessage("person.all.failed " + e.getMessage(),null, null));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("person.all.failed",null, null));
+        }
     }
 
     public ResponseEntity<?> updateApplicant(Long id, PersonDTO applicantDTO) {
         try{
             Applicant newApplicant = applicantMapper.toUpdate(getApplicant(id), applicantDTO);
-            validator.validPerson(newApplicant);
+            validator.validApplicant(newApplicant);
             repository.update(newApplicant);
             return ResponseEntity.status(HttpStatus.OK).body(applicantMapper.toResponseApplicant(newApplicant, messageSource.getMessage("applicant.update.success", null,null)));
         }catch (PersonException e){
@@ -141,7 +163,7 @@ public class ApplicantServiceImpl implements ApplicantService {
     private ResponseEntity<?> getCreateEntityResponseDTO(PersonDTO entity) {
         try{
             Applicant applicant = applicantMapper.createApplicant(entity, getLastId());
-            validator.validPerson(applicant);
+            validator.validApplicant(applicant);
             WriteResult result = repository.create(applicant);
             emailGoogleService.createEmailPerson(applicant);
             return ResponseEntity.status(HttpStatus.CREATED).body(applicantMapper.toResponseApplicant(applicant, messageSource.getMessage("applicant.created.success", null,null)));

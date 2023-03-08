@@ -14,13 +14,19 @@ import java.util.concurrent.ExecutionException;
 
 public interface ApplicantService extends Removable, Writeable<PersonDTO> {
 
-    ResponseEntity<?> sendGetPersonByRequest(Person person, Long id);
+    ResponseEntity<?> sendGetPersonByRequest(Long id);
 
-    ResponseEntity<?> getByIdUserApp(User user);
+    ResponseEntity<?> getByIdUserApp(Long id);
 
     void postulateJobOffer(Applicant applicant) throws ExecutionException, InterruptedException;
 
     List<Applicant> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
-    Applicant getApplicantByUser(User user);
+    Applicant getApplicantByUser(User user) throws ExecutionException, InterruptedException;
+
+    ResponseEntity<?> sendGetPersonByIdentification(String identification);
+
+    ResponseEntity<?> sendGetPersonByIdRequest(Long id);
+
+    ResponseEntity<?> getAllApplicant();
 }

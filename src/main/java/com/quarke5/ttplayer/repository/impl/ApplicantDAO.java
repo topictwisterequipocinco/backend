@@ -13,12 +13,15 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@Component
 public class ApplicantDAO implements DAOS<Applicant> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicantDAO.class);
     private static final int FIRST = 0;
@@ -87,8 +90,10 @@ public class ApplicantDAO implements DAOS<Applicant> {
         return document.toObject(Applicant.class);
     }
 
-    public Applicant findByUser(User user){
-        return null;
+    public Applicant findByUser(User user) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("user", user).get();
+        QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST);
+        return document.toObject(Applicant.class);
     }
 
     private CollectionReference getCollectionDataBaseFirebase() {

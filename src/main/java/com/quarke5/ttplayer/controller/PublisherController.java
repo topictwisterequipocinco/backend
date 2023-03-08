@@ -1,5 +1,6 @@
 package com.quarke5.ttplayer.controller;
 
+import com.quarke5.ttplayer.controller.interfaces.Controllers;
 import com.quarke5.ttplayer.controller.interfaces.Creators;
 import com.quarke5.ttplayer.controller.interfaces.Messages;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
@@ -21,10 +22,15 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @Api(value = "Publisher Controller", description = "Controlador con los endpoints que actúan sobre los Publisher.")
 @RequestMapping("/publisher")
-public class PublisherController implements Messages, Creators<PersonDTO> {
+public class PublisherController implements Controllers<PersonDTO>, Messages, Creators<PersonDTO> {
 
     @Autowired
     PublisherService publisherService;
+
+    @Override
+    public ResponseEntity<?> get(Long id) {
+        return null;
+    }
 
     @ApiOperation(value = "${publisher.update} - Modifica un objeto Publisher", response = ResponseEntity.class)
     @ApiResponses(value = {
@@ -40,6 +46,16 @@ public class PublisherController implements Messages, Creators<PersonDTO> {
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO publisherDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return publisherService.update(id, publisherDTO);
+    }
+
+    @Override
+    public ResponseEntity<?> delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        return null;
     }
 
     @Override

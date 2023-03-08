@@ -1,18 +1,13 @@
 package com.quarke5.ttplayer.service.impl;
 
 import com.google.cloud.firestore.WriteResult;
-import com.quarke5.ttplayer.dto.request.JobOfferDTO;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
 import com.quarke5.ttplayer.dto.response.ResponsePersonDto;
-import com.quarke5.ttplayer.exception.JobOfferException;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.PersonMapper;
-import com.quarke5.ttplayer.model.Applicant;
-import com.quarke5.ttplayer.model.JobOffer;
 import com.quarke5.ttplayer.model.Person;
-import com.quarke5.ttplayer.model.Publisher;
 import com.quarke5.ttplayer.repository.impl.PersonDAO;
-import com.quarke5.ttplayer.service.emails.EmailGoogleService;
+import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import com.quarke5.ttplayer.service.interfaces.ApplicantService;
 import com.quarke5.ttplayer.service.interfaces.PersonService;
 import com.quarke5.ttplayer.service.interfaces.PublisherService;
@@ -37,7 +32,7 @@ public class PersonServiceImpl implements PersonService {
     private static final int NEXT_ID = 1;
 
     @Autowired private PersonDAO repository;
-    @Autowired private EmailGoogleService emailGoogleService;
+    @Autowired private EmailsGoogle emailGoogleService;
     @Autowired private PersonMapper mapper;
     @Autowired private MessageSource messageSource;
     @Autowired private UserService userService;

@@ -3,6 +3,7 @@ package com.quarke5.ttplayer.controller;
 import com.quarke5.ttplayer.dto.request.JobOfferEvaluationFlutterDTO;
 import com.quarke5.ttplayer.dto.request.JobOfferFlutterDTO;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
+import com.quarke5.ttplayer.dto.request.ProfileDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.security.authentication.AuthenticationRequest;
 import com.quarke5.ttplayer.service.interfaces.FlutterService;
@@ -47,7 +48,7 @@ public class FlutterController {
         return flutterService.getJobOfferAllByPublisher(id);
     }
 
-    @ApiOperation(value = "flutter.getJobApplicantAllByJobOfferSimplePublisher - Publisher: Ver quien se aplico en cada aviso. El Id es el del aviso a consultar", response = ResponseEntity.class)
+    @ApiOperation(value = "flutter.getAllAppliedByJobOffer - Publisher: Ver quien se aplico en cada aviso. El Id es el del aviso a consultar", response = ResponseEntity.class)
     @GetMapping(value = "/jobapplicants-by-my-offers/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllAppliedByJobOffer(@PathVariable Long id){
         return flutterService.getAllAppliedByJobOffer(id);
@@ -66,16 +67,30 @@ public class FlutterController {
         return flutterService.create(personDTO);
     }
 
-    @ApiOperation(value = "${flutter.getById} - Devuelve los datos de una persona por su ID", response = ResponseEntity.class)
-    @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id){
-        return flutterService.getById(id);
+    @ApiOperation(value = "${flutter.getProfileById} - Devuelve los datos de una persona por su ID", response = ResponseEntity.class)
+    @PostMapping("/get-profile")
+    public ResponseEntity<?> getProfileById(@RequestBody @Valid ProfileDTO profileDTO){
+        return flutterService.getProfileById(profileDTO);   }
+
+
+
+    @ApiOperation(value = "flutter.updatePerson - Modifica una persona y su perfil desde App Flutter", response = ResponseEntity.class)
+    @PutMapping(value = "/change-user", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public void updatePerson(@RequestBody @Valid ProfileDTO profileDTO){
+        flutterService.updatePerson(profileDTO);
     }
 
-    @ApiOperation(value = "flutter.update - Modifica un JobOffer desde App Flutter", response = ResponseEntity.class)
+    @ApiOperation(value = "flutter.deletePerson - Elimina una persona y su perfil desde App Flutter", response = ResponseEntity.class)
+    @DeleteMapping(value = "/delete-user", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public void deletePerson(@RequestBody @Valid ProfileDTO profileDTO) {
+        flutterService.deletePerson(profileDTO);
+    }
+
+    @ApiOperation(value = "flutter.updateJobOffer - Modifica un JobOffer desde App Flutter", response = ResponseEntity.class)
     @PutMapping(value = "/joboffer", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> updateJobOffer(@RequestBody @Valid JobOfferFlutterDTO jobOfferFlutterDTO){
         return flutterService.updateJobOffer(jobOfferFlutterDTO);
     }
+
 
 }

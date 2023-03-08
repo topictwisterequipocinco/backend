@@ -3,6 +3,7 @@ package com.quarke5.ttplayer.service.impl;
 import com.quarke5.ttplayer.dto.request.JobOfferEvaluationFlutterDTO;
 import com.quarke5.ttplayer.dto.request.JobOfferFlutterDTO;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
+import com.quarke5.ttplayer.dto.request.ProfileDTO;
 import com.quarke5.ttplayer.dto.response.ResponsePersonDto;
 import com.quarke5.ttplayer.mapper.FlutterMapper;
 import com.quarke5.ttplayer.model.*;
@@ -123,15 +124,46 @@ public class FlutterServiceImpl implements FlutterService, Urls {
     @Override
     public ResponseEntity<?> create(PersonDTO personDTO) {
         ResponseEntity<?> newEntity = personDTO.getRole().equals(Roles.APPLICANT.name()) ?
-                restTemplate.postForEntity(URL_APPLICANT_CREATE_AND_UPDATE, personDTO, ResponsePersonDto.class)
-                : restTemplate.postForEntity(URL_PUBLISHER_CREATE_AND_UPDATE, personDTO, ResponsePersonDto.class);
+                restTemplate.postForEntity(URL_APPLICANT, personDTO, ResponsePersonDto.class)
+                : restTemplate.postForEntity(URL_PUBLISHER, personDTO, ResponsePersonDto.class);
         return ResponseEntity.status(newEntity.getStatusCode()).body(flutterMapper.toResponseCreateUserByFlutterDTO((ResponsePersonDto) Objects.requireNonNull(newEntity.getBody())));
     }
 
     @Override
-    public ResponseEntity<?> getById(Long id) {
-        ResponseEntity<?> newEntity = restTemplate.getForEntity(URL_PERSON_CREATE_AND_UPDATE + id, ResponsePersonDto.class);
-        return ResponseEntity.status(newEntity.getStatusCode()).body(flutterMapper.toResponseCreateUserByFlutterDTO((ResponsePersonDto) Objects.requireNonNull(newEntity.getBody())));
+    public ResponseEntity<?> getProfileById(ProfileDTO profileDTO) {
+        if(profileDTO.getRole().equals(Roles.APPLICANT.name())){
+            ResponseEntity<?> newEntity = restTemplate.getForEntity(URL_APPLICANT + profileDTO.getId(), ResponsePersonDto.class, profileDTO.getId());
+            return ResponseEntity.status(newEntity.getStatusCode()).body(flutterMapper.toResponseCreateUserByFlutterDTO((ResponsePersonDto) Objects.requireNonNull(newEntity.getBody())));
+        } else if (profileDTO.getRole().equals(Roles.PUBLISHER.name())) {
+            ResponseEntity<?> newEntity = restTemplate.getForEntity(URL_PUBLISHER + profileDTO.getId(), ResponsePersonDto.class, profileDTO.getId());
+            return ResponseEntity.status(newEntity.getStatusCode()).body(flutterMapper.toResponseCreateUserByFlutterDTO((ResponsePersonDto) Objects.requireNonNull(newEntity.getBody())));
+        } else if (profileDTO.getRole().equals(Roles.UTN.name())) {
+            ResponseEntity<?> newEntity = restTemplate.getForEntity(URL_PERSON + profileDTO.getId(), ResponsePersonDto.class, profileDTO.getId());
+            return ResponseEntity.status(newEntity.getStatusCode()).body(flutterMapper.toResponseCreateUserByFlutterDTO((ResponsePersonDto) Objects.requireNonNull(newEntity.getBody())));
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePerson(ProfileDTO profileDTO) {
+        if(profileDTO.getRole().equals(Roles.APPLICANT.name())){
+            restTemplate.put(URL_APPLICANT + profileDTO.getId(), profileDTO);
+        } else if (profileDTO.getRole().equals(Roles.PUBLISHER.name())) {
+            restTemplate.put(URL_PUBLISHER + profileDTO.getId(), profileDTO);
+        } else if (profileDTO.getRole().equals(Roles.UTN.name())) {
+            restTemplate.put(URL_PERSON + profileDTO.getId(), profileDTO);
+        }
+    }
+
+    @Override
+    public void deletePerson(ProfileDTO profileDTO) {
+        if(profileDTO.getRole().equals(Roles.APPLICANT.name())){
+            restTemplate.delete(URL_APPLICANT + profileDTO.getId(), profileDTO);
+        } else if (profileDTO.getRole().equals(Roles.PUBLISHER.name())) {
+            restTemplate.delete(URL_PUBLISHER + profileDTO.getId(), profileDTO);
+        } else if (profileDTO.getRole().equals(Roles.UTN.name())) {
+            restTemplate.delete(URL_PERSON + profileDTO.getId(), profileDTO);
+        }
     }
 
     @Override
@@ -148,6 +180,8 @@ public class FlutterServiceImpl implements FlutterService, Urls {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(messageSource.getMessage("joboffer.update.failed",new Object[] {e.getMessage()}, null));
         }
     }
+
+
 
     private ResponseEntity<?> getResponseEntity(List<JobApplication> jobApplications) {
         return ResponseEntity.status(HttpStatus.OK).body(flutterMapper.toResponseJobApplication(jobApplications,

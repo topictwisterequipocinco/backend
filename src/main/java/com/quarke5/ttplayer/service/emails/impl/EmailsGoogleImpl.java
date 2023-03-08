@@ -6,7 +6,7 @@ import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.JobOffer;
 import com.quarke5.ttplayer.model.Person;
 import com.quarke5.ttplayer.model.Publisher;
-import com.quarke5.ttplayer.service.emails.EmailGoogleService;
+import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-public class EmailGoogleServiceImpl implements EmailGoogleService {
+public class EmailsGoogleImpl implements EmailsGoogle {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailGoogleServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailsGoogleImpl.class);
     private static final String EMAIL_WELCOME = "Bienvenido a la Bolsa de Trabajo del CUVL-UTN";
     private static final String PATH_BASE = "http://localhost:8082/auth/activate";
     private static final String PUBLICATED = "Ha publicado el siguiente aviso : ";
@@ -37,7 +37,7 @@ public class EmailGoogleServiceImpl implements EmailGoogleService {
     private String emailFrom;
 
     @Autowired
-    public EmailGoogleServiceImpl(JavaMailSender sender, EmailMapper emailMapper) {
+    public EmailsGoogleImpl(JavaMailSender sender, EmailMapper emailMapper) {
         this.sender = sender;
         this.emailMapper = emailMapper;
     }

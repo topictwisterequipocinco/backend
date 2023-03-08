@@ -7,7 +7,6 @@ import com.quarke5.ttplayer.exception.JobOfferException;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.exception.UserException;
 import com.quarke5.ttplayer.model.*;
-import com.quarke5.ttplayer.model.enums.Roles;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -24,17 +23,30 @@ public class Validator extends AbstractValidator {
         return false;
     }
 
+
     public boolean validPerson(Person per) throws PersonException {
         Map<String, String> list = getResponseText(per);
-        if(per.getUser().getRole().getRole().equals(Roles.APPLICANT)){
-            Applicant app = (Applicant) per;
-            list.put(app.getBirthDate().toString(), !Pattern.matches(REGEX_DATE, getLocalDateFormat(app)) ? "1" : "Fecha de Nacimiento es incorrecto o invalido");
-        }
         ResponseValidatorDto dto = getResultValidate(list);
         if(!dto.isResult()){throw new PersonException(dto.getResponse());}
 
         return dto.isResult();
     }
+    public boolean validApplicant(Applicant applicant) throws PersonException {
+        Map<String, String> list = getResponseTextApplicant(applicant);
+        ResponseValidatorDto dto = getResultValidate(list);
+        if(!dto.isResult()){throw new PersonException(dto.getResponse());}
+
+        return dto.isResult();
+    }
+
+    public boolean validPublisher(Publisher publisher) throws PersonException {
+        Map<String, String> list = getResponseTextPublisher(publisher);
+        ResponseValidatorDto dto = getResultValidate(list);
+        if(!dto.isResult()){throw new PersonException(dto.getResponse());}
+
+        return dto.isResult();
+    }
+
 
     public boolean validCategory(Category cat) throws CategoryException {
         Map<String, String> list = getResponseText(cat);
@@ -107,5 +119,25 @@ public class Validator extends AbstractValidator {
 
         return list;
     }
+
+    private Map<String, String> getResponseTextApplicant(Applicant per) {
+        Map<String, String> list = new HashMap<>();
+        list.put(per.getOficialName(), per.getOficialName() != null || !Pattern.matches(REGEX_NAMES, per.getOficialName()) ? "1" : "El Nombre o Nombre Oficial es incorrecto o invalido");
+        list.put(per.getLastName(), per.getLastName() != null || !Pattern.matches(REGEX_NAMES, per.getLastName()) ? "1" : "El Apellido o Nombre Representativo es incorrecto o invalido");
+        list.put(per.getPhoneNumber(), StringUtils.isNumeric(per.getPhoneNumber()) ? "1" : "El Telèfono es incorrecto o invalido");
+        list.put(per.getIdentification(), StringUtils.isNumeric(per.getIdentification()) ? "1" : "Su Identificacion es incorrecto o invalido");
+        list.put(per.getBirthDate().toString(), !Pattern.matches(REGEX_DATE, getLocalDateFormat(per)) ? "1" : "Fecha de Nacimiento es incorrecto o invalido");
+        return list;
+    }
+
+    private Map<String, String> getResponseTextPublisher(Publisher per) {
+        Map<String, String> list = new HashMap<>();
+        list.put(per.getOficialName(), per.getOficialName() != null || !Pattern.matches(REGEX_NAMES, per.getOficialName()) ? "1" : "El Nombre o Nombre Oficial es incorrecto o invalido");
+        list.put(per.getLastName(), per.getLastName() != null || !Pattern.matches(REGEX_NAMES, per.getLastName()) ? "1" : "El Apellido o Nombre Representativo es incorrecto o invalido");
+        list.put(per.getPhoneNumber(), StringUtils.isNumeric(per.getPhoneNumber()) ? "1" : "El Telèfono es incorrecto o invalido");
+        list.put(per.getIdentification(), StringUtils.isNumeric(per.getIdentification()) ? "1" : "Su Identificacion es incorrecto o invalido");
+        return list;
+    }
+
 
 }

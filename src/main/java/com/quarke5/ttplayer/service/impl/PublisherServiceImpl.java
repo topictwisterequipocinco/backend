@@ -5,13 +5,12 @@ import com.quarke5.ttplayer.dto.request.PersonDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.PersonMapper;
 import com.quarke5.ttplayer.mapper.PublisherMapper;
-import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.Person;
 import com.quarke5.ttplayer.model.Publisher;
 import com.quarke5.ttplayer.model.User;
 import com.quarke5.ttplayer.model.enums.State;
 import com.quarke5.ttplayer.repository.impl.PublisherDAO;
-import com.quarke5.ttplayer.service.emails.EmailGoogleService;
+import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import com.quarke5.ttplayer.service.interfaces.PublisherService;
 import com.quarke5.ttplayer.util.Errors;
 import com.quarke5.ttplayer.validator.Validator;
@@ -33,7 +32,7 @@ public class PublisherServiceImpl implements PublisherService {
     private static final int NEXT_ID = 1;
 
     @Autowired private PublisherDAO repository;
-    @Autowired private EmailGoogleService emailGoogleService;
+    @Autowired private EmailsGoogle emailGoogleService;
     @Autowired private PublisherMapper publisherMapper;
     @Autowired private PersonMapper personMapper;
     @Autowired private MessageSource messageSource;

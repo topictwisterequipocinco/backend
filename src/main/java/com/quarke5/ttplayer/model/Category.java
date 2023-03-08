@@ -33,19 +33,4 @@ public class Category {
     @NotNull(message = "El campo Descripciòn de Categoria es obligatorio")
     @Column
     private String description;
-
-    @Column
-    @CreationTimestamp
-    private LocalDate createDay;
-
-    @Column
-    @CreationTimestamp
-    private LocalDate modifiedDay;
-
-    @Column
-    @CreationTimestamp
-    private LocalDate deletedDay;
-
-    @Column
-    private boolean deleted;
 }

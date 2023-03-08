@@ -16,6 +16,8 @@ public abstract class AbstractValidator extends Exception {
     public abstract boolean validateLoginNickname(Player responseDTO, LoginNicknameDTO loginNicknameDTO);
 
     public boolean validPerson(Person per) throws PersonException {return false;}
+    public boolean validApplicant(Applicant applicant) throws PersonException {return false;}
+    public boolean validPublisher(Publisher publisher) throws PersonException {return false;}
     public boolean validJobOffer(JobOffer jobOffer) throws JobOfferException {return false;}
     public boolean validCategory(Category category) throws CategoryException {return false;}
     public boolean isValidForgot(User user, ForgotDTO forgotDTO) throws UserException {return false;};

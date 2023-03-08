@@ -1,5 +1,6 @@
 package com.quarke5.ttplayer.controller;
 
+import com.quarke5.ttplayer.controller.interfaces.Controllers;
 import com.quarke5.ttplayer.controller.interfaces.Creators;
 import com.quarke5.ttplayer.controller.interfaces.Messages;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
@@ -21,9 +22,25 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @Api(value = "Applicant Controller", description = "Controlador con los endpoints que actúan sobre los Applicants.")
 @RequestMapping("/applicant")
-public class ApplicantController implements Messages, Creators<PersonDTO> {
+public class ApplicantController implements Controllers<PersonDTO>, Messages, Creators<PersonDTO> {
 
     @Autowired ApplicantService applicantService;
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        return applicantService.sendGetPersonByIdRequest(id);
+    }
+    @GetMapping("/identification/{identification}")
+    public ResponseEntity<?> getByDni(@PathVariable String identification) throws ExecutionException, InterruptedException {
+        return applicantService.sendGetPersonByIdentification(identification);
+    }
+
+    @GetMapping(path = "/userId/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getByIdUser(@PathVariable Long id){
+        return applicantService.getByIdUserApp(id);
+    }
+
 
     @ApiOperation(value = "${applicant.update} - Modifica un Applicant", response = ResponseEntity.class)
     @ApiResponses(value = {
@@ -39,6 +56,19 @@ public class ApplicantController implements Messages, Creators<PersonDTO> {
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO applicantDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return applicantService.update(id, applicantDTO);
+    }
+
+    @Override
+    @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> delete(Long id) {
+        return applicantService.delete(id);
+    }
+
+
+
+    @Override
+    public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        return applicantService.getAllApplicant();
     }
 
     @Override

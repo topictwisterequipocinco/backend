@@ -7,7 +7,7 @@ import com.quarke5.ttplayer.dto.response.ResponseJobOfferDto;
 import com.quarke5.ttplayer.model.*;
 import com.quarke5.ttplayer.model.enums.State;
 import com.quarke5.ttplayer.repository.impl.CategoryDAO;
-import com.quarke5.ttplayer.service.emails.EmailGoogleService;
+import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -19,9 +19,9 @@ import java.util.concurrent.ExecutionException;
 public class JobOfferMapper {
 
     private final CategoryDAO categoryRepository;
-    private final EmailGoogleService emailGoogleService;
+    private final EmailsGoogle emailGoogleService;
 
-    public JobOfferMapper(CategoryDAO categoryRepository, EmailGoogleService emailGoogleService) {
+    public JobOfferMapper(CategoryDAO categoryRepository, EmailsGoogle emailGoogleService) {
         this.categoryRepository = categoryRepository;
         this.emailGoogleService = emailGoogleService;
     }

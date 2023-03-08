@@ -13,7 +13,7 @@ public interface Readable {
 
     ResponseEntity<?> getByIdUser(Long id);
 
-    Applicant getPersonTypeApplicantByIdUser(Long id);
+    Applicant getPersonTypeApplicantByIdUser(Long id) throws ExecutionException, InterruptedException;
 
     Publisher getPersonTypePublisherByIdUser(Long id);
 }
