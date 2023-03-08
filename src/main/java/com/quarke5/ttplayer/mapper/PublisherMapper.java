@@ -40,7 +40,7 @@ public class PublisherMapper {
 
     public Publisher toUpdate(Publisher pub, PersonDTO dto) {
         buildPerson(pub, dto);
-        pub.setUser(userService.update(pub, dto.getEmail(), dto.getPassword()));
+        pub.setUser(userService.updatePublisher(pub, dto.getEmail(), dto.getPassword()));
         return pub;
     }
 

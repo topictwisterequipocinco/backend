@@ -34,7 +34,6 @@ public class PublisherServiceImpl implements PublisherService {
     @Autowired private PublisherDAO repository;
     @Autowired private EmailsGoogle emailGoogleService;
     @Autowired private PublisherMapper publisherMapper;
-    @Autowired private PersonMapper personMapper;
     @Autowired private MessageSource messageSource;
     @Autowired private Validator validator;
     @Autowired private Errors errors;
@@ -102,9 +101,9 @@ public class PublisherServiceImpl implements PublisherService {
     private ResponseEntity<?> updatePublisher(Long id, PersonDTO publisherDTO) {
         try {
             Publisher newPublisher = publisherMapper.toUpdate(getPublisher(id), publisherDTO);
-            validator.validPerson(newPublisher);
+            validator.validPublisher(newPublisher);
             repository.update(newPublisher);
-            return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.toResponsePerson(newPublisher, messageSource.getMessage("publisher.update.success", null,null)));
+            return ResponseEntity.status(HttpStatus.CREATED).body(publisherMapper.toResponsePublisher(newPublisher, messageSource.getMessage("publisher.update.success", null,null)));
         }catch (PersonException e){
             LOGGER.error(messageSource.getMessage("publisher.update.failed " + e.getMessage(),new Object[] {e.getMessage()}, null));
             errors.logError(messageSource.getMessage("publisher.update.failed " + e.getMessage(),new Object[] {e.getMessage()}, null));
@@ -141,10 +140,10 @@ public class PublisherServiceImpl implements PublisherService {
     private ResponseEntity<?> getCreateEntityResponseDTO(PersonDTO personDTO) {
         try{
             Publisher newPublisher = publisherMapper.createPublisher(personDTO, getLastId());
-            validator.validPerson(newPublisher);
+            validator.validPublisher(newPublisher);
             WriteResult publisher = repository.create(newPublisher);
-            emailGoogleService.createEmailPerson(newPublisher);
-            return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.toResponsePerson(newPublisher, messageSource.getMessage("publisher.created.success", null,null)));
+            emailGoogleService.createEmailPublisher(newPublisher);
+            return ResponseEntity.status(HttpStatus.CREATED).body(publisherMapper.toResponsePublisher(newPublisher, messageSource.getMessage("publisher.update.success", null,null)));
         }catch (PersonException | ExecutionException | InterruptedException e){
             LOGGER.error(messageSource.getMessage("publisher.created.failed " + e.getMessage(),new Object[] {e.getMessage()}, null));
             errors.logError(messageSource.getMessage("publisher.created.failed " + e.getMessage(),new Object[] {e.getMessage()}, null));

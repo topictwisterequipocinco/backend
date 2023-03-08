@@ -39,6 +39,48 @@ public class EmailMapper {
         return res;
     }
 
+    public ResponseEmailUtnDTO toModelEmailCreatePerson(Person person, String path, String welcome) {
+        String url = ""+path+"/"+person.getUser().getUsername()+"/"+person.getUser().getVerificationCode()+"";
+
+        ResponseEmailUtnDTO res = ResponseEmailUtnDTO.builder()
+                .names(person.getOficialName() + " " + person.getLastName())
+                .identification(person.getIdentification())
+                .email(person.getUser().getUsername())
+                .phone(person.getPhoneNumber())
+                .message(welcome)
+                .url(url)
+                .build();
+        return res;
+    }
+
+    public ResponseEmailUtnDTO toModelEmailCreateApplicant(Applicant applicant, String pathBase, String emailWelcome) {
+        String url = ""+pathBase+"/"+applicant.getUser().getUsername()+"/"+applicant.getUser().getVerificationCode()+"";
+
+        ResponseEmailUtnDTO res = ResponseEmailUtnDTO.builder()
+                .names(applicant.getOficialName() + " " + applicant.getLastName())
+                .identification(applicant.getIdentification())
+                .email(applicant.getUser().getUsername())
+                .phone(applicant.getPhoneNumber())
+                .message(emailWelcome)
+                .url(url)
+                .build();
+        return res;
+    }
+
+    public ResponseEmailUtnDTO toModelEmailCreatePublisher(Publisher publisher, String pathBase, String emailWelcome) {
+        String url = ""+pathBase+"/"+publisher.getUser().getUsername()+"/"+publisher.getUser().getVerificationCode()+"";
+
+        ResponseEmailUtnDTO res = ResponseEmailUtnDTO.builder()
+                .names(publisher.getOficialName() + " " + publisher.getLastName())
+                .identification(publisher.getIdentification())
+                .email(publisher.getUser().getUsername())
+                .phone(publisher.getPhoneNumber())
+                .message(emailWelcome)
+                .url(url)
+                .build();
+        return res;
+    }
+
     public ResponseEmailUtnDTO toModelEmailJobOffer(JobOffer jobOffer, Publisher person, String publicated, String day) {
         ResponseEmailUtnDTO res = ResponseEmailUtnDTO.builder()
                 .names(person.getOficialName() + " " + person.getLastName())

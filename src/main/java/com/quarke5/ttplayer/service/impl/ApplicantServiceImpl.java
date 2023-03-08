@@ -33,7 +33,6 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Autowired private ApplicantDAO repository;
     @Autowired private EmailsGoogle emailGoogleService;
-
     @Autowired private UserService userService;
     @Autowired private ApplicantMapper applicantMapper;
     @Autowired private MessageSource messageSource;
@@ -165,7 +164,7 @@ public class ApplicantServiceImpl implements ApplicantService {
             Applicant applicant = applicantMapper.createApplicant(entity, getLastId());
             validator.validApplicant(applicant);
             WriteResult result = repository.create(applicant);
-            emailGoogleService.createEmailPerson(applicant);
+            emailGoogleService.createEmailApplicant(applicant);
             return ResponseEntity.status(HttpStatus.CREATED).body(applicantMapper.toResponseApplicant(applicant, messageSource.getMessage("applicant.created.success", null,null)));
         }catch (ExecutionException | InterruptedException | InvocationTargetException |
                 IllegalAccessException | NoSuchMethodException | PersonException e) {

@@ -46,7 +46,7 @@ public class ApplicantMapper {
 
     public Applicant toUpdate(Applicant app, PersonDTO dto) {
         buildPerson(app, dto);
-        app.setUser(userService.update(app, dto.getEmail(), dto.getPassword()));
+        app.setUser(userService.updateApplicant(app, dto.getEmail(), dto.getPassword()));
         return app;
     }
 

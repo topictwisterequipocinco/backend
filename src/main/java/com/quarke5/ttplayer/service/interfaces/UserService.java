@@ -2,9 +2,7 @@ package com.quarke5.ttplayer.service.interfaces;
 
 import com.quarke5.ttplayer.dto.request.ForgotDTO;
 import com.quarke5.ttplayer.exception.PersonException;
-import com.quarke5.ttplayer.model.Person;
-import com.quarke5.ttplayer.model.Role;
-import com.quarke5.ttplayer.model.User;
+import com.quarke5.ttplayer.model.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.concurrent.ExecutionException;
@@ -30,4 +28,8 @@ public interface UserService {
     User findByUsernameByStateActive(String username);
 
     User save(User user) throws ExecutionException, InterruptedException;
+
+    User updatePublisher(Publisher pub, String email, String password);
+
+    User updateApplicant(Applicant app, String email, String password);
 }

@@ -1,6 +1,7 @@
 package com.quarke5.ttplayer.service.emails.impl;
 
 import com.quarke5.ttplayer.dto.response.ResponseEmailUtnDTO;
+import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.EmailMapper;
 import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.JobOffer;
@@ -44,11 +45,26 @@ public class EmailsGoogleImpl implements EmailsGoogle {
 
     @Override
     public void createEmailPerson(Person app){
-        ResponseEmailUtnDTO email = emailMapper.toModelEmailCreate(app, PATH_BASE, EMAIL_WELCOME);
-        LOGGER.info("Construyendo el cuerpo del mail a enviar al Applicant...");
-        String bodyText = "Denominaciòn y Nombres :" + " " + email.getNames()
-                + " ." + " " + "Presione este link para Activar su cuenta : " + " " + email.getUrl();
-        String subject = "Bienvenido a Bolsa de Trabajo CUVL-UTN 2021";
+        ResponseEmailUtnDTO email = emailMapper.toModelEmailCreatePerson(app, PATH_BASE, EMAIL_WELCOME);
+        LOGGER.info("Construyendo el cuerpo del mail a enviar.");
+        String bodyText  = getBodyText(email);
+        String subject = getSubjectText();
+        sendEmail(email, bodyText, subject);
+    }
+
+    @Override
+    public void createEmailApplicant(Applicant applicant) throws PersonException {
+        ResponseEmailUtnDTO email = emailMapper.toModelEmailCreateApplicant(applicant, PATH_BASE, EMAIL_WELCOME);
+        String bodyText = getBodyText(email);
+        String subject = getSubjectText();
+        sendEmail(email, bodyText, subject);
+    }
+
+    @Override
+    public void createEmailPublisher(Publisher publisher) throws PersonException {
+        ResponseEmailUtnDTO email = emailMapper.toModelEmailCreatePublisher(publisher, PATH_BASE, EMAIL_WELCOME);
+        String bodyText = getBodyText(email);
+        String subject = getSubjectText();
         sendEmail(email, bodyText, subject);
     }
 
@@ -88,6 +104,15 @@ public class EmailsGoogleImpl implements EmailsGoogle {
         String bodyReview = "Tiene un aviso para reveer";
         String subjectReview = "Un aviso para revisar antes de ser publicado";
         sendEmail(jobOfferReview, bodyReview, subjectReview);
+    }
+
+    private String getSubjectText() {
+        return "Bienvenido a Bolsa de Trabajo CUVL-UTN 2021";
+    }
+
+    private String getBodyText(ResponseEmailUtnDTO email) {
+        return "Denominaciòn y Nombres :" + " " + email.getNames()
+                + " ." + " " + "Presione este link para Activar su cuenta : " + " " + email.getUrl();
     }
 
     private void sendEmail(ResponseEmailUtnDTO email, String body, String subject){

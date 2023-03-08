@@ -3,9 +3,7 @@ package com.quarke5.ttplayer.service.impl;
 import com.quarke5.ttplayer.dto.request.ForgotDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.UserMapper;
-import com.quarke5.ttplayer.model.Person;
-import com.quarke5.ttplayer.model.Role;
-import com.quarke5.ttplayer.model.User;
+import com.quarke5.ttplayer.model.*;
 import com.quarke5.ttplayer.model.enums.State;
 import com.quarke5.ttplayer.repository.impl.UserDAO;
 import com.quarke5.ttplayer.service.interfaces.UserService;
@@ -120,6 +118,20 @@ public class UserServiceImpl implements UserService {
     public User save(User user) throws ExecutionException, InterruptedException {
         repository.update(user);
         return repository.getEntity(user.getUsername());
+    }
+
+    @Override
+    public User updatePublisher(Publisher pub, String email, String password) {
+        User user = updateUser(pub.getUser(), email, bCryptPasswordEncoder.encode(password));
+        repository.update(user);
+        return user;
+    }
+
+    @Override
+    public User updateApplicant(Applicant app, String email, String password) {
+        User user = updateUser(app.getUser(), email, bCryptPasswordEncoder.encode(password));
+        repository.update(user);
+        return user;
     }
 
     private User updateUser(User user, String email, String password){
