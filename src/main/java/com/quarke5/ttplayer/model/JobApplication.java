@@ -22,13 +22,13 @@ public class JobApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id;
 
     @Column
-    private LocalDate applied;
+    private String applied;
 
     @Column
-    private LocalDate deletedDay;
+    private String deletedDay;
 
     @Column
     private boolean deleted;

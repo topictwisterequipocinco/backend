@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -26,6 +28,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    private static final int NEXT_ID = 1;
+
     @Autowired private UserDAO repository;
     @Autowired private UserMapper userMapper;
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,8 +38,10 @@ public class UserServiceImpl implements UserService {
     @Autowired private Errors errors;
 
     @Override
-    public User saveUser(String email, String password, Role role) throws PersonException {
-        return userMapper.toModel(email, role, bCryptPasswordEncoder.encode(password));
+    public User saveUser(String email, String password, Role role) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        User user = userMapper.toModel(email, role, bCryptPasswordEncoder.encode(password), getLastId());
+        repository.create(user);
+        return user;
     }
 
     @Override
@@ -136,5 +142,9 @@ public class UserServiceImpl implements UserService {
 
     private User updateUser(User user, String email, String password){
         return userMapper.update(user, email, password);
+    }
+
+    private int getLastId() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        return repository.getAllEntities().size() + NEXT_ID;
     }
 }

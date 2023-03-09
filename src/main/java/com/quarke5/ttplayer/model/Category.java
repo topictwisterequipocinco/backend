@@ -24,7 +24,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id;
 
     @NotNull(message = "El campo Nombre de Categoria es obligatorio")
     @Column

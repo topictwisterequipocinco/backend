@@ -17,7 +17,7 @@ public class FirebaseConfig {
     @Bean
     public Firestore firestore() throws IOException {
         FileInputStream serviceAccount =
-                new FileInputStream("./topictwister-firebase-admins.json");
+                new FileInputStream("./topictwister-6b92a-firebase-adminsdk-585xd-c44cfa76a5.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -27,5 +27,6 @@ public class FirebaseConfig {
         FirebaseApp firebaseApp = FirebaseApp.initializeApp(options);
         return FirestoreClient.getFirestore(firebaseApp);
     }
+
 
 }

@@ -91,7 +91,7 @@ public class JobOfferServiceImpl implements JobOfferService {
         try {
             JobOffer jobOffer = getJobOffer(id);
             jobOffer.setDeleted(true);
-            jobOffer.setDeletedDay(LocalDate.now());
+            jobOffer.setDeletedDay(String.valueOf(LocalDate.now()));
             repository.update(jobOffer);
             return ResponseEntity.status(HttpStatus.OK).body(messageSource.getMessage("joboffer.deleted.success", null, null));
         } catch (Exception e) {

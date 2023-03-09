@@ -27,7 +27,7 @@ public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id;
 
     @NotNull(message = "El campo Tìtulo es obligatorio")
     @Column
@@ -60,13 +60,13 @@ public class JobOffer {
     private TypePosition position;
 
     @Column
-    private LocalDate createDay;
+    private String createDay;
 
     @Column
-    private LocalDate modifiedDay;
+    private String modifiedDay;
 
     @Column
-    private LocalDate deletedDay;
+    private String deletedDay;
 
     @Enumerated(value = EnumType.STRING)
     @Column

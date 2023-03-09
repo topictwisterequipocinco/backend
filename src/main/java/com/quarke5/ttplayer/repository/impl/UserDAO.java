@@ -39,7 +39,7 @@ public class UserDAO implements DAOS<User> {
     public void update(User user) {
         try {
             ApiFuture<WriteResult> collectionsApiFuture = db.collection(getCollectionDataBaseFirebase().getId())
-                    .document(String.valueOf(user.getUserId())).set(user);
+                    .document(String.valueOf(user.getId())).set(user);
             String result = collectionsApiFuture.get().getUpdateTime().toString();
         }catch (ExecutionException | InterruptedException e){
             LOGGER.info(e.getMessage());
@@ -63,7 +63,7 @@ public class UserDAO implements DAOS<User> {
     @Override
     public WriteResult create(User user) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> collectionsApiFuture = db.collection(getCollectionDataBaseFirebase().getId())
-                .document(String.valueOf(user.getUserId())).set(user);
+                .document(String.valueOf(user.getId())).set(user);
         if(collectionsApiFuture.isDone()) return collectionsApiFuture.get();
         return null;
     }

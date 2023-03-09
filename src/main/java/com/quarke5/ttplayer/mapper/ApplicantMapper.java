@@ -12,9 +12,12 @@ import com.quarke5.ttplayer.model.enums.TypeStudent;
 import com.quarke5.ttplayer.repository.impl.RoleDAO;
 import com.quarke5.ttplayer.service.interfaces.UserService;
 import com.quarke5.ttplayer.validator.AgeValidate;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 import java.util.concurrent.ExecutionException;
 
 @Component
@@ -30,7 +33,7 @@ public class ApplicantMapper {
         this.ageValidate = ageValidate;
     }
 
-    public Applicant createApplicant(PersonDTO dto, int id) throws PersonException, ExecutionException, InterruptedException {
+    public Applicant createApplicant(PersonDTO dto, int id) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         int age = 18;
         if(!ageValidate.ageValidateApplicant(dto, age)) return null;
 
@@ -40,7 +43,7 @@ public class ApplicantMapper {
 
         buildPerson(app, dto);
         app.setUser(user);
-        app.setId((long) id);
+        app.setId(String.valueOf(id));
         return app;
     }
 
@@ -55,7 +58,7 @@ public class ApplicantMapper {
         app.setLastName(dto.getSurname());
         app.setIdentification(dto.getIdentification());
         app.setPhoneNumber(dto.getPhoneNumber());
-        app.setBirthDate(dto.getBirthDate());
+        app.setBirthDate(String.valueOf(dto.getBirthDate()));
         if(dto.getGenre().equals("FEMENINO")){
             app.setGenre(Genre.FEMALE);
         }else if (dto.getGenre().equals("MASCULINO")){
@@ -75,7 +78,7 @@ public class ApplicantMapper {
 
     public ResponsePersonDto toResponseApplicant(Applicant app, String message) {
         ResponsePersonDto dto = ResponsePersonDto.builder()
-                .id(app.getId())
+                .id(Long.valueOf(app.getId()))
                 .name(app.getOficialName())
                 .surname(app.getLastName())
                 .identification(app.getIdentification())
@@ -83,13 +86,13 @@ public class ApplicantMapper {
                 .email(app.getUser().getUsername())
                 .role(app.getUser().getRole().getRole().toString())
                 .genre(app.getGenre())
-                .birthDate(app.getBirthDate())
+                .birthDate(LocalDate.parse(app.getBirthDate()))
                 .typeStudent(app.getTypeStudent())
                 .message(message)
                 .uri(ServletUriComponentsBuilder
                         .fromCurrentContextPath()
                         .path("/person/{id}")
-                        .buildAndExpand(app.getUser().getUserId()).toUri())
+                        .buildAndExpand(app.getUser().getId()).toUri())
                 .build();
         return dto;
     }

@@ -43,7 +43,8 @@ class PlayerControllerTest {
     @Autowired MessageSource messageSource;
     @Autowired MockMvc mockMvc;
 
-    private static final String BASE_URL = "https://topictwisterequipocinco.herokuapp.com/player/";
+    //private static final String BASE_URL = "https://topictwisterequipocinco.herokuapp.com/player/";
+    private static final String BASE_URL = "https://bolsadetrabajo.herokuapp.com/player/";
     private static final int NEXT_ID = 1;
     private static int NUMBERS_VICTORY_INIT = 0;
     private static int SUM_ONE = 1;

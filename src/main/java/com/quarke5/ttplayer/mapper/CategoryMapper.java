@@ -15,7 +15,7 @@ public class CategoryMapper {
 
     public Category toModel(CategoryDTO dto, int id) {
         Category cate = Category.builder()
-                .id((long) id)
+                .id(String.valueOf(id))
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .build();
@@ -24,7 +24,7 @@ public class CategoryMapper {
 
     public ResponseCategoryDto toResponsePerson(Category category, String message) {
         ResponseCategoryDto res = ResponseCategoryDto.builder()
-                .id(category.getId())
+                .id(Long.valueOf(category.getId()))
                 .name(category.getName())
                 .description(category.getDescription())
                 .message(message)

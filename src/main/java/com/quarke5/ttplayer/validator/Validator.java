@@ -106,9 +106,10 @@ public class Validator extends AbstractValidator {
         return list;
     }
 
-    private String getLocalDateFormat(Applicant app) {
+    /*private String getLocalDateFormat(Applicant app) {
         return app.getBirthDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-    }
+    }*/
+
 
     private  Map<String, String>  getResponseText(Person per) {
         Map<String, String> list = new HashMap<>();
@@ -126,7 +127,7 @@ public class Validator extends AbstractValidator {
         list.put(per.getLastName(), per.getLastName() != null || !Pattern.matches(REGEX_NAMES, per.getLastName()) ? "1" : "El Apellido o Nombre Representativo es incorrecto o invalido");
         list.put(per.getPhoneNumber(), StringUtils.isNumeric(per.getPhoneNumber()) ? "1" : "El Telèfono es incorrecto o invalido");
         list.put(per.getIdentification(), StringUtils.isNumeric(per.getIdentification()) ? "1" : "Su Identificacion es incorrecto o invalido");
-        list.put(per.getBirthDate().toString(), !Pattern.matches(REGEX_DATE, getLocalDateFormat(per)) ? "1" : "Fecha de Nacimiento es incorrecto o invalido");
+        //list.put(per.getBirthDate().toString(), !Pattern.matches(REGEX_DATE, getLocalDateFormat(per)) ? "1" : "Fecha de Nacimiento es incorrecto o invalido");
         return list;
     }
 

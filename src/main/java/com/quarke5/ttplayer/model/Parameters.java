@@ -15,7 +15,7 @@ public class Parameters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id;
 
     @NotNull(message = "El campo Descripciòn es obligatorio")
     @Column

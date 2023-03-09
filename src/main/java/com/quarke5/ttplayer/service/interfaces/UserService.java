@@ -5,11 +5,12 @@ import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.model.*;
 import org.springframework.http.ResponseEntity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 
 public interface UserService {
 
-    User saveUser(String email, String password, Role role) throws PersonException;
+    User saveUser(String email, String password, Role role) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     ResponseEntity<?> findById(Long id);
 

@@ -22,7 +22,7 @@ public class FlutterMapper {
             dto.setPhone(person.getPhoneNumber());
             dto.setUsername(user.getUsername());
             dto.setPassword(user.getPassword());
-            dto.setId(user.getUserId());
+            dto.setId(Long.valueOf(user.getId()));
             dto.setRole(String.valueOf(user.getRole().getRole()));
             dto.setConected(user.isConected());
             dto.setGenre("");
@@ -36,7 +36,7 @@ public class FlutterMapper {
             dto.setPhone(app.getPhoneNumber());
             dto.setUsername(user.getUsername());
             dto.setPassword(user.getPassword());
-            dto.setId(user.getUserId());
+            dto.setId(Long.valueOf(user.getId()));
             dto.setRole(String.valueOf(user.getRole().getRole()));
             dto.setConected(user.isConected());
             dto.setGenre(app.getGenre().name());
@@ -50,7 +50,7 @@ public class FlutterMapper {
             dto.setPhone(pub.getPhoneNumber());
             dto.setUsername(user.getUsername());
             dto.setPassword(user.getPassword());
-            dto.setId(user.getUserId());
+            dto.setId(Long.valueOf(user.getId()));
             dto.setRole(String.valueOf(user.getRole().getRole()));
             dto.setConected(user.isConected());
             dto.setWebPage(pub.getWebPage());
@@ -65,18 +65,18 @@ public class FlutterMapper {
         List<ResponseJobApplicationFlutterDto> list = new ArrayList<>();
         for(JobApplication job : jobApplications){
             ResponseJobApplicationFlutterDto res = new ResponseJobApplicationFlutterDto();
-            res.setJobOfferApplicantID(job.getId());
+            res.setJobOfferApplicantID(Long.valueOf(job.getId()));
             res.setApplied(String.valueOf(job.getApplied()));
             res.setDeletedDay(String.valueOf(job.getDeletedDay()));
             res.setJobAppdeleted(job.isDeleted());
-            res.setApplicantID(job.getApplicant().getId());
+            res.setApplicantID(Long.valueOf(job.getApplicant().getId()));
             res.setName(job.getApplicant().getOficialName());
             res.setSurname(job.getApplicant().getLastName());
             res.setDni(job.getApplicant().getIdentification());
             res.setEmail(job.getApplicant().getUser().getUsername());
             res.setPhoneNumber(job.getApplicant().getPhoneNumber());
             res.setTypeStudent(String.valueOf(job.getApplicant().getTypeStudent()));
-            res.setJobOfferID(job.getJobOffer().getId());
+            res.setJobOfferID(Long.valueOf(job.getJobOffer().getId()));
             res.setTitle(job.getJobOffer().getTitle());
             res.setDescription(job.getJobOffer().getDescription());
             res.setArea(job.getJobOffer().getArea());
@@ -108,7 +108,7 @@ public class FlutterMapper {
 
     public ResponseJobOfferFlutterDto toResponsePublisherJobOffer(JobOffer jobOffer, String message) {
         ResponseJobOfferFlutterDto dto = ResponseJobOfferFlutterDto.builder()
-                .id(jobOffer.getId())
+                .id(Long.valueOf(jobOffer.getId()))
                 .title(jobOffer.getTitle())
                 .description(jobOffer.getDescription())
                 .body(jobOffer.getBody())

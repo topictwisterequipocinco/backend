@@ -40,7 +40,7 @@ public class RoleDAO implements DAOS<Role> {
     public void update(Role role) {
         try {
             ApiFuture<WriteResult> collectionsApiFuture = db.collection(getCollectionDataBaseFirebase().getId())
-                    .document(String.valueOf(role.getRoleId())).set(role);
+                    .document(String.valueOf(role.getId())).set(role);
             String result = collectionsApiFuture.get().getUpdateTime().toString();
         }catch (ExecutionException | InterruptedException e){
             LOGGER.info(e.getMessage());
@@ -64,7 +64,7 @@ public class RoleDAO implements DAOS<Role> {
     @Override
     public WriteResult create(Role role) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> collectionsApiFuture = db.collection(getCollectionDataBaseFirebase().getId())
-                .document(String.valueOf(role.getRoleId())).set(role);
+                .document(String.valueOf(role.getId())).set(role);
         if(collectionsApiFuture.isDone()) return collectionsApiFuture.get();
         return null;
     }

@@ -18,13 +18,14 @@ public class UserMapper {
         this.generateHash = generateHash;
     }
 
-    public User toModel(String email, Role role, String encode) throws PersonException {
+    public User toModel(String email, Role role, String encode, int id) throws PersonException {
         Long pass = generateHash.generateAleatorio();
         User user = User.builder()
+                .id(String.valueOf(id))
                 .username(email)
                 .password(encode)
                 .role(role)
-                .state(State.REVIEW)
+                .state(State.ACTIVE)
                 .verificationCode(String.valueOf(pass))
                 .conected(true)
                 .build();
@@ -33,7 +34,7 @@ public class UserMapper {
 
     public ResponseUserDto toUserResponseDto(User user, String message) {
         ResponseUserDto us = ResponseUserDto.builder()
-                .id(user.getUserId())
+                .id(Long.valueOf(user.getId()))
                 .username(user.getUsername())
                 .role(user.getRole().getRole().toString())
                 .message(message)
@@ -45,7 +46,7 @@ public class UserMapper {
     public AuthenticationResponse responseLoginUserJason(User user, String jwt) {
         AuthenticationResponse auth = new AuthenticationResponse(jwt);
         auth.setUsername(user.getUsername());
-        auth.setId(user.getUserId());
+        auth.setId(Long.valueOf(user.getId()));
         auth.setRole(user.getRole());
         return auth;
     }

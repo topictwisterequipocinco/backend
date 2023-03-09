@@ -24,7 +24,7 @@ public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id;
 
     @NotNull(message = "El campo nombre es obligatorio")
     @Column
@@ -51,7 +51,7 @@ public class Applicant {
 
     @NotNull(message = "El campo fecha de nacimiento es obligatorio")
     @Column
-    private LocalDate birthDate;
+    private String birthDate;
 
     @Column
     @Enumerated(value = EnumType.STRING)

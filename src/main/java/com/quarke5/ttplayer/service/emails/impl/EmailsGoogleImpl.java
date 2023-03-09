@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Calendar;
 
 @Service
 public class EmailsGoogleImpl implements EmailsGoogle {
@@ -107,12 +108,12 @@ public class EmailsGoogleImpl implements EmailsGoogle {
     }
 
     private String getSubjectText() {
-        return "Bienvenido a Bolsa de Trabajo CUVL-UTN 2021";
+        return "Bienvenido a Bolsa de Trabajo CUVL-UTN " + Calendar.getInstance().getWeekYear();
     }
 
     private String getBodyText(ResponseEmailUtnDTO email) {
         return "Denominaciòn y Nombres :" + " " + email.getNames()
-                + " ." + " " + "Presione este link para Activar su cuenta : " + " " + email.getUrl();
+                + " ." + " Identificación: " + email.getIdentification() + " " + " Teléfono: " + email.getPhone();
     }
 
     private void sendEmail(ResponseEmailUtnDTO email, String body, String subject){

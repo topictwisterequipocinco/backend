@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.utn.bolsadetrabajo"))
+                .apis(RequestHandlerSelectors.basePackage("com.quarke5.ttplayer"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(metaData());

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -29,14 +30,14 @@ public class PersonMapper {
     @Autowired PublisherMapper publisherMapper;
     private List<ResponsePersonDto> list;
 
-    public Person createPerson(PersonDTO dto, int id) throws PersonException, ExecutionException, InterruptedException {
+    public Person createPerson(PersonDTO dto, int id) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Role role = roleRepository.getEntity(String.valueOf(Roles.UTN));
         User user = userService.saveUser(dto.getEmail(), dto.getPassword(), role);
         Person per = new Person();
 
         buildPerson(per, dto);
         per.setUser(user);
-        per.setId((long) id);
+        per.setId(String.valueOf(id));
         return per;
     }
 
@@ -56,7 +57,7 @@ public class PersonMapper {
 
     public ResponsePersonDto toResponsePerson(Person person, String message) {
         ResponsePersonDto per = ResponsePersonDto.builder()
-                .id(person.getId())
+                .id(Long.valueOf(person.getId()))
                 .name(person.getOficialName())
                 .surname(person.getLastName())
                 .identification(person.getIdentification())
@@ -67,7 +68,7 @@ public class PersonMapper {
                 .uri(ServletUriComponentsBuilder
                         .fromCurrentContextPath()
                         .path("/person/{id}")
-                        .buildAndExpand(person.getUser().getUserId()).toUri())
+                        .buildAndExpand(person.getUser().getId()).toUri())
                 .build();
         return per;
     }

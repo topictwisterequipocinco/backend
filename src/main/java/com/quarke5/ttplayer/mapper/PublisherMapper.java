@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 
 @Component
@@ -27,14 +28,14 @@ public class PublisherMapper {
         this.userService = userService;
     }
 
-    public Publisher createPublisher(PersonDTO dto, int id) throws PersonException, ExecutionException, InterruptedException {
+    public Publisher createPublisher(PersonDTO dto, int id) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Role role = roleRepository.getEntity(String.valueOf(Roles.PUBLISHER));
         User user = userService.saveUser(dto.getEmail(), dto.getPassword(), role);
         Publisher pub = new Publisher();
 
         buildPerson(pub, dto);
         pub.setUser(user);
-        pub.setId((long) id);
+        pub.setId(String.valueOf(id));
         return pub;
     }
 
@@ -55,7 +56,7 @@ public class PublisherMapper {
 
     public ResponsePersonDto toResponsePublisher(Publisher publisher, String message) {
         ResponsePersonDto dto = ResponsePersonDto.builder()
-                .id(publisher.getId())
+                .id(Long.valueOf(publisher.getId()))
                 .name(publisher.getOficialName())
                 .surname(publisher.getLastName())
                 .identification(publisher.getIdentification())
@@ -67,7 +68,7 @@ public class PublisherMapper {
                 .uri(ServletUriComponentsBuilder
                         .fromCurrentContextPath()
                         .path("/person/{id}")
-                        .buildAndExpand(publisher.getUser().getUserId()).toUri())
+                        .buildAndExpand(publisher.getUser().getId()).toUri())
                 .build();
         return dto;
     }

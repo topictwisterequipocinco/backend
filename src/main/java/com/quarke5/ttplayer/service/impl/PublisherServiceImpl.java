@@ -47,14 +47,14 @@ public class PublisherServiceImpl implements PublisherService {
     public ResponseEntity<?> delete(Long id) {
         try{
             LOGGER.info("el id que recibo es " + id);
-            Publisher publisher = getPublisher(id);
+            Publisher publisher = getPublisher(String.valueOf(id));
             publisher.setDeleted(true);
             publisher.getUser().setState(State.DELETED);
             repository.update(publisher);
             return ResponseEntity.status(HttpStatus.OK).body(messageSource.getMessage("publisher.deleted.success", null,null));
         }catch (Exception e){
-            LOGGER.error(messageSource.getMessage("publisher.deleted.failed " + e.getMessage(), new Object[] {id}, null));
-            errors.logError(messageSource.getMessage("publisher.deleted.failed " + e.getMessage(), new Object[] {id}, null));
+            LOGGER.error("No existe la cuenta de Publisher con id: " + id);
+            errors.logError("No existe la cuenta de Publisher con id: " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisher.deleted.failed", new Object[] {id}, null));
         }
     }
@@ -65,8 +65,8 @@ public class PublisherServiceImpl implements PublisherService {
             Publisher publisher = getPublisher(person.getId());
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(publisherMapper.toResponsePublisher(publisher, messageSource.getMessage("publisher.response.object.success", null,null)));
         }catch (Exception e){
-            LOGGER.error(messageSource.getMessage("publisher.search.failed " + e.getMessage(), new Object[] {id}, null));
-            errors.logError(messageSource.getMessage("publisher.search.failed " + e.getMessage(), new Object[] {id}, null));
+            LOGGER.error("No existe la cuenta de Publisher con id: " + id);
+            errors.logError("No existe la cuenta de Publisher con id: " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisher.search.failed", new Object[] {id}, null));
         }
     }
@@ -77,9 +77,9 @@ public class PublisherServiceImpl implements PublisherService {
             Publisher publisher = repository.findByUser(user);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(publisherMapper.toResponsePublisher(publisher, messageSource.getMessage("publisher.response.object.success", null,null)));
         }catch (Exception e){
-            LOGGER.error(messageSource.getMessage("publisher.search.failed " + e.getMessage(), new Object[] {user.getUserId()}, null));
-            errors.logError(messageSource.getMessage("publisher.search.failed " + e.getMessage(), new Object[] {user.getUserId()}, null));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisher.search.failed", new Object[] {user.getUserId()}, null));
+            LOGGER.error("No existe la cuenta de Publisher con id: " + user.getId());
+            errors.logError("No existe la cuenta de Publisher con id: " + user.getId());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisher.search.failed", new Object[] {user.getId()}, null));
         }
     }
 
@@ -100,7 +100,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     private ResponseEntity<?> updatePublisher(Long id, PersonDTO publisherDTO) {
         try {
-            Publisher newPublisher = publisherMapper.toUpdate(getPublisher(id), publisherDTO);
+            Publisher newPublisher = publisherMapper.toUpdate(getPublisher(String.valueOf(id)), publisherDTO);
             validator.validPublisher(newPublisher);
             repository.update(newPublisher);
             return ResponseEntity.status(HttpStatus.CREATED).body(publisherMapper.toResponsePublisher(newPublisher, messageSource.getMessage("publisher.update.success", null,null)));
@@ -121,7 +121,7 @@ public class PublisherServiceImpl implements PublisherService {
         }
     }
 
-    private Publisher getPublisher(Long id) {
+    private Publisher getPublisher(String id) {
         return repository.findById(String.valueOf(id));
     }
 

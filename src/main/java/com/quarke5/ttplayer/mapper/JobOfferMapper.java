@@ -29,13 +29,13 @@ public class JobOfferMapper {
     public JobOffer toModel(JobOfferDTO dto, Publisher publisher, int id) throws ExecutionException, InterruptedException {
         Category category = categoryRepository.getEntity(dto.getCategory());
         JobOffer job = JobOffer.builder()
-                .id((long) id)
+                .id(String.valueOf(id))
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .body(dto.getBody())
                 .area(dto.getArea())
-                .createDay(LocalDate.now())
-                .modifiedDay(LocalDate.now())
+                .createDay(String.valueOf(LocalDate.now()))
+                .modifiedDay(String.valueOf(LocalDate.now()))
                 .deleted(false)
                 .experience(dto.getExperience())
                 .modality(dto.getModality())
@@ -49,14 +49,14 @@ public class JobOfferMapper {
 
     public ResponseJobOfferDto toResponsePublisherJobOffer(JobOffer jobOffer, String message) {
         ResponseJobOfferDto dto = ResponseJobOfferDto.builder()
-                .id(jobOffer.getId())
+                .id(Long.valueOf(jobOffer.getId()))
                 .title(jobOffer.getTitle())
                 .description(jobOffer.getDescription())
                 .body(jobOffer.getBody())
                 .area(jobOffer.getArea())
-                .datePublished(jobOffer.getCreateDay())
-                .modifiedDay(jobOffer.getModifiedDay())
-                .deletedDay(jobOffer.getDeletedDay())
+                .datePublished(LocalDate.parse(jobOffer.getCreateDay()))
+                .modifiedDay(LocalDate.parse(jobOffer.getModifiedDay()))
+                .deletedDay(LocalDate.parse(jobOffer.getDeletedDay()))
                 .experience(jobOffer.getExperience())
                 .modality(jobOffer.getModality())
                 .position(jobOffer.getPosition())
@@ -74,7 +74,7 @@ public class JobOfferMapper {
         jobOffer.setDescription(dto.getDescription());
         jobOffer.setBody(dto.getBody());
         jobOffer.setArea(dto.getArea());
-        jobOffer.setModifiedDay(LocalDate.now());
+        jobOffer.setModifiedDay(String.valueOf(LocalDate.now()));
         jobOffer.setExperience(dto.getExperience());
         jobOffer.setModality(dto.getModality());
         jobOffer.setPosition(dto.getPosition());
@@ -86,7 +86,7 @@ public class JobOfferMapper {
         JobApplication jobApplication = JobApplication.builder()
                 .applicant(applicant)
                 .jobOffer(jobOffer)
-                .applied(LocalDate.now())
+                .applied(String.valueOf(LocalDate.now()))
                 .deleted(false)
                 .build();
         return jobApplication;
@@ -151,7 +151,7 @@ public class JobOfferMapper {
         jobOffer.setDescription(dto.getDescription());
         jobOffer.setBody(dto.getBody());
         jobOffer.setArea(dto.getArea());
-        jobOffer.setModifiedDay(LocalDate.now());
+        jobOffer.setModifiedDay(String.valueOf(LocalDate.now()));
         jobOffer.setExperience(dto.getExperience());
         jobOffer.setModality(dto.getModality());
         jobOffer.setPosition(dto.getPosition());

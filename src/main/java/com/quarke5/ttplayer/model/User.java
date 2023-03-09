@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long userId;
+    private String id;
 
     @NotNull(message = "El campo email es obligatorio")
     @Column

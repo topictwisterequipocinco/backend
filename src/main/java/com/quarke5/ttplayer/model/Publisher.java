@@ -21,7 +21,7 @@ public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id;
 
     @NotNull(message = "El campo nombre es obligatorio")
     @Column
