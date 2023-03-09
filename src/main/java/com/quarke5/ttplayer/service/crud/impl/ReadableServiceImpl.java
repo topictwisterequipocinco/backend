@@ -78,7 +78,7 @@ public class ReadableServiceImpl implements Readable {
     }
 
     @Override
-    public Publisher getPersonTypePublisherByIdUser(Long id) {
+    public Publisher getPersonTypePublisherByIdUser(Long id) throws ExecutionException, InterruptedException {
         User user = getUserById(id);
         return publisherService.getPublisherByUser(user);
     }

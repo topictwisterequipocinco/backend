@@ -26,7 +26,7 @@ public interface UserService {
 
     ResponseEntity<?> forgot(ForgotDTO forgotDTO);
 
-    User findByUsernameByStateActive(String username);
+    User findByUsernameByStateActive(String username) throws ExecutionException, InterruptedException;
 
     User save(User user) throws ExecutionException, InterruptedException;
 

@@ -11,6 +11,7 @@ import com.quarke5.ttplayer.repository.impl.JobOfferDAO;
 import com.quarke5.ttplayer.service.crud.Readable;
 import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import com.quarke5.ttplayer.service.interfaces.ApplicantService;
+import com.quarke5.ttplayer.service.interfaces.JobApplicationService;
 import com.quarke5.ttplayer.service.interfaces.JobOfferService;
 import com.quarke5.ttplayer.service.interfaces.PublisherService;
 import com.quarke5.ttplayer.service.reports.ReportLists;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +37,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     private static final int NEXT_ID = 1;
 
     @Autowired private JobOfferDAO repository;
-    @Autowired private JobApplicantDAO jobApplicationRepository;
+    @Autowired private JobApplicationService jobApplicationService;
     @Autowired private JobOfferMapper mapper;
     @Autowired private MessageSource messageSource;
     @Autowired private EmailsGoogle emailGoogleService;
@@ -106,9 +108,9 @@ public class JobOfferServiceImpl implements JobOfferService {
         if(!verifyIsExists(jobOfferDTO.getTitle())){
             return getCreateEntityResponseDTO(userIdByPublisher, jobOfferDTO);
         }else {
-            LOGGER.error(messageSource.getMessage("category.isExists", null,null));
-            errors.logError(messageSource.getMessage("category.isExists", null,null));
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("category.isExists",null, null));
+            LOGGER.error("No se ha podido crear el aviso. Publisher id " + userIdByPublisher + " Titulo del aviso " + jobOfferDTO.getTitle());
+            errors.logError("No se ha podido crear el aviso. Publisher id " + userIdByPublisher + " Titulo del aviso " + jobOfferDTO.getTitle());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("joboffer.created.failed",null, null));
         }
     }
 
@@ -151,13 +153,9 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public ResponseEntity<?> postulate(PostulateDTO postulateDTO) {
         try {
-            Applicant applicant = readableService.getPersonTypeApplicantByIdUser(postulateDTO.getApplicantID());
+            Applicant applicant = applicantService.getApplicantById(postulateDTO.getApplicantID());
             JobOffer jobOffer = getJobOffer(postulateDTO.getJobofferID());
-            JobApplication jobApplication = saveJobApplication(applicant, jobOffer);
-            applicant.getJobApplications().add(jobApplication);
-            jobOffer.getJobApplications().add(jobApplication);
-            applicantService.postulateJobOffer(applicant);
-            repository.update(jobOffer);
+            jobApplicationService.createJobApplication(applicant, jobOffer);
             emailGoogleService.createEmailPostulate(jobOffer, applicant);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(messageSource.getMessage("applicant.postulate.success", null, null));
         } catch (Exception e) {
@@ -202,15 +200,18 @@ public class JobOfferServiceImpl implements JobOfferService {
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toResponsePublisherJobOffer(aux, message));
     }
 
-    private JobApplication saveJobApplication (Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException {
-        JobApplication job = mapper.toModelJobApplication(applicant, jobOffer);
-        for (JobApplication ele : applicant.getJobApplications()) {
-            if (ele.getJobOffer().getTitle().equals(jobOffer.getTitle())) {
-                return null;
+    @Override
+    public List<JobOffer> getAllJobOffersByPublisherId(Long publisherID) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        List<JobOffer> jobOffers = repository.getAllEntities();
+        List<JobOffer> resultList = new ArrayList<>();
+        String searchID = String.valueOf(publisherID);
+        for(JobOffer jobOffer : jobOffers){
+            if(jobOffer.getPublisher()!=null && jobOffer.getPublisher().getId().equals(searchID)){
+                resultList.add(jobOffer);
             }
         }
-        WriteResult jobResult = jobApplicationRepository.create(job);
-        return job;
+        LOGGER.info("Tamaño de la lista de avisos para el publicador nro " + publisherID + " " + resultList.size());
+        return resultList;
     }
 
     private boolean verifyIsExists(String element) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -227,18 +228,16 @@ public class JobOfferServiceImpl implements JobOfferService {
 
     private ResponseEntity<?> getCreateEntityResponseDTO(Long userIdByPublisher, JobOfferDTO jobOfferDTO) {
         try {
-            Publisher publisher = readableService.getPersonTypePublisherByIdUser(userIdByPublisher);
+            Publisher publisher = publisherService.getPublisherById(userIdByPublisher);
             JobOffer newJobOffer = mapper.toModel(jobOfferDTO, publisher, getLastId());
             validJobOffer.validJobOffer(newJobOffer);
             WriteResult jobOffer = repository.create(newJobOffer);
-            publisher.getJobOfferList().add(newJobOffer);
-            publisherService.addJobOffer(publisher);
             emailGoogleService.createEmailJobOfferPublicated(newJobOffer, publisher);
             return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponsePublisherJobOffer(newJobOffer, messageSource.getMessage("joboffer.created.success", null, null)));
         } catch (JobOfferException | ExecutionException | InterruptedException | InvocationTargetException |
                  IllegalAccessException | NoSuchMethodException e) {
-            LOGGER.error(messageSource.getMessage("joboffer.created.failed " + e.getMessage(),new Object[] {e.getMessage()}, null));
-            errors.logError(messageSource.getMessage("joboffer.created.failed " + e.getMessage(),new Object[] {e.getMessage()}, null));
+            LOGGER.error("No se ha podido crear el aviso. Publisher id no existe : " + userIdByPublisher);
+            errors.logError("No se ha podido crear el aviso. Publisher id no existe : " + userIdByPublisher);
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("joboffer.created.failed",new Object[] {e.getMessage()}, null));
         }
     }

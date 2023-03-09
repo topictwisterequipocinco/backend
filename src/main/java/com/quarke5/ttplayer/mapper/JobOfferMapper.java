@@ -4,6 +4,7 @@ import com.quarke5.ttplayer.dto.request.JobOfferDTO;
 import com.quarke5.ttplayer.dto.request.JobOfferEvaluationDTO;
 import com.quarke5.ttplayer.dto.request.JobOfferFlutterDTO;
 import com.quarke5.ttplayer.dto.response.ResponseJobOfferDto;
+import com.quarke5.ttplayer.dto.response.ResponseJobOfferFlutterDto;
 import com.quarke5.ttplayer.model.*;
 import com.quarke5.ttplayer.model.enums.State;
 import com.quarke5.ttplayer.repository.impl.CategoryDAO;
@@ -47,20 +48,20 @@ public class JobOfferMapper {
         return job;
     }
 
-    public ResponseJobOfferDto toResponsePublisherJobOffer(JobOffer jobOffer, String message) {
-        ResponseJobOfferDto dto = ResponseJobOfferDto.builder()
+    public ResponseJobOfferFlutterDto toResponsePublisherJobOffer(JobOffer jobOffer, String message) {
+        ResponseJobOfferFlutterDto dto = ResponseJobOfferFlutterDto.builder()
                 .id(Long.valueOf(jobOffer.getId()))
                 .title(jobOffer.getTitle())
                 .description(jobOffer.getDescription())
                 .body(jobOffer.getBody())
                 .area(jobOffer.getArea())
-                .datePublished(LocalDate.parse(jobOffer.getCreateDay()))
-                .modifiedDay(LocalDate.parse(jobOffer.getModifiedDay()))
-                .deletedDay(LocalDate.parse(jobOffer.getDeletedDay()))
+                .datePublished(jobOffer.getCreateDay())
+                .modifiedDay(jobOffer.getModifiedDay())
+                .deletedDay(jobOffer.getDeletedDay())
                 .experience(jobOffer.getExperience())
-                .modality(jobOffer.getModality())
-                .position(jobOffer.getPosition())
-                .state(jobOffer.getState())
+                .modality(jobOffer.getModality().name())
+                .position(jobOffer.getPosition().name())
+                .state(jobOffer.getState().name())
                 .category(jobOffer.getCategory().getName())
                 .message(message)
                 .build();
@@ -82,30 +83,22 @@ public class JobOfferMapper {
         return jobOffer;
     }
 
-    public JobApplication toModelJobApplication(Applicant applicant, JobOffer jobOffer) {
-        JobApplication jobApplication = JobApplication.builder()
-                .applicant(applicant)
-                .jobOffer(jobOffer)
-                .applied(String.valueOf(LocalDate.now()))
-                .deleted(false)
-                .build();
-        return jobApplication;
-    }
 
-    public List<ResponseJobOfferDto> toJobOfferList(List<JobOffer> jobOffers) {
-        List<ResponseJobOfferDto> list = new ArrayList<>();
+
+    public List<ResponseJobOfferFlutterDto> toJobOfferList(List<JobOffer> jobOffers) {
+        List<ResponseJobOfferFlutterDto> list = new ArrayList<>();
         for(JobOffer job : jobOffers){
-            ResponseJobOfferDto res = toResponsePublisherJobOffer(job, " ");
+            ResponseJobOfferFlutterDto res = toResponsePublisherJobOffer(job, " ");
             list.add(res);
         }
         return list;
     }
 
-    public List<ResponseJobOfferDto> toPendingJobOfferList(List<JobOffer> jobOffers) {
-        List<ResponseJobOfferDto> list = new ArrayList<>();
+    public List<ResponseJobOfferFlutterDto> toPendingJobOfferList(List<JobOffer> jobOffers) {
+        List<ResponseJobOfferFlutterDto> list = new ArrayList<>();
         for(JobOffer job : jobOffers){
             if(job.getState().equals(State.PENDING)){
-                ResponseJobOfferDto res = toResponsePublisherJobOffer(job, " ");
+                ResponseJobOfferFlutterDto res = toResponsePublisherJobOffer(job, " ");
                 list.add(res);
             }
         }
@@ -123,21 +116,21 @@ public class JobOfferMapper {
         return jobOffer;
     }
 
-    public List<ResponseJobOfferDto> toJobOfferListSimplePublisher(List<JobOffer> jobOffers) {
-        List<ResponseJobOfferDto> list = new ArrayList<>();
+    public List<ResponseJobOfferFlutterDto> toJobOfferListSimplePublisher(List<JobOffer> jobOffers) {
+        List<ResponseJobOfferFlutterDto> list = new ArrayList<>();
         for(JobOffer job : jobOffers){
-            ResponseJobOfferDto res = toResponsePublisherJobOffer(job, " ");
+            ResponseJobOfferFlutterDto res = toResponsePublisherJobOffer(job, " ");
             list.add(res);
         }
         return list;
     }
 
-    public List<ResponseJobOfferDto> toJobOfferListSimplePublisherByFilter(List<JobOffer> jobOffers, Category filter) throws ExecutionException, InterruptedException {
-        List<ResponseJobOfferDto> list = new ArrayList<>();
+    public List<ResponseJobOfferFlutterDto> toJobOfferListSimplePublisherByFilter(List<JobOffer> jobOffers, Category filter) throws ExecutionException, InterruptedException {
+        List<ResponseJobOfferFlutterDto> list = new ArrayList<>();
         Category category = categoryRepository.getEntity(filter.getName());
         for(JobOffer job : jobOffers){
             if(job.getCategory().getName().equals(category.getName())){
-                ResponseJobOfferDto res = toResponsePublisherJobOffer(job, " ");
+                ResponseJobOfferFlutterDto res = toResponsePublisherJobOffer(job, " ");
                 list.add(res);
             }
         }

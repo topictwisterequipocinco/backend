@@ -1,7 +1,9 @@
 package com.quarke5.ttplayer.mapper;
 
 import com.quarke5.ttplayer.dto.response.ResponseJobApplicationDto;
+import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.JobApplication;
+import com.quarke5.ttplayer.model.JobOffer;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,8 +18,8 @@ public class JobApplicationMapper {
         for(JobApplication job : jobApplications){
             ResponseJobApplicationDto res = new ResponseJobApplicationDto();
             res.setJobOfferApplicantID(Long.valueOf(job.getId()));
-            res.setApplied(LocalDate.parse(job.getApplied()));
-            res.setDeletedDay(LocalDate.parse(job.getDeletedDay()));
+            res.setApplied(job.getApplied());
+            res.setDeletedDay(job.getDeletedDay());
             res.setJobAppdeleted(job.isDeleted());
             res.setApplicantID(Long.valueOf(job.getApplicant().getId()));
             res.setName(job.getApplicant().getOficialName());
@@ -36,14 +38,25 @@ public class JobApplicationMapper {
             res.setPosition(job.getJobOffer().getPosition());
             res.setCategory(job.getJobOffer().getCategory().getName());
             res.setCategoryDescription(job.getJobOffer().getCategory().getDescription());
-            res.setDatePublished(LocalDate.parse(job.getJobOffer().getCreateDay()));
-            res.setModifiedDay(LocalDate.parse(job.getJobOffer().getModifiedDay()));
-            res.setJobOfferDeletedDay(LocalDate.parse(job.getJobOffer().getDeletedDay()));
+            res.setDatePublished(job.getJobOffer().getCreateDay());
+            res.setModifiedDay(job.getJobOffer().getModifiedDay());
+            res.setJobOfferDeletedDay(job.getJobOffer().getDeletedDay());
             res.setJobOfferDeleted(job.getJobOffer().isDeleted());
             res.setState(job.getJobOffer().getState());
             list.add(res);
         }
         return list;
+    }
+
+    public JobApplication toModelJobApplication(Applicant applicant, JobOffer jobOffer, int id) {
+        JobApplication jobApplication = JobApplication.builder()
+                .id(String.valueOf(id))
+                .applicant(applicant)
+                .jobOffer(jobOffer)
+                .applied(String.valueOf(LocalDate.now()))
+                .deleted(false)
+                .build();
+        return jobApplication;
     }
 
 }

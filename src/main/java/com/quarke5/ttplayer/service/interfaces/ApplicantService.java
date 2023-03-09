@@ -1,6 +1,7 @@
 package com.quarke5.ttplayer.service.interfaces;
 
 import com.quarke5.ttplayer.dto.request.PersonDTO;
+import com.quarke5.ttplayer.dto.request.ProfileDTO;
 import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.Person;
 import com.quarke5.ttplayer.model.User;
@@ -24,9 +25,12 @@ public interface ApplicantService extends Removable, Writeable<PersonDTO> {
 
     Applicant getApplicantByUser(User user) throws ExecutionException, InterruptedException;
 
-    ResponseEntity<?> sendGetPersonByIdentification(String identification);
+    ResponseEntity<?> sendGetPersonByIdentification(String identification) throws ExecutionException, InterruptedException;
 
     ResponseEntity<?> sendGetPersonByIdRequest(Long id);
 
     ResponseEntity<?> getAllApplicant();
+
+
+    Applicant getApplicantById(Long id);
 }

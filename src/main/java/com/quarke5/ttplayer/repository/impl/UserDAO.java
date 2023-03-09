@@ -91,12 +91,4 @@ public class UserDAO implements DAOS<User> {
     private CollectionReference getCollectionDataBaseFirebase() {
         return firestore.collection("user");
     }
-
-    public User findByUsernameByState(String username){
-        return null;
-    }
-
-    public User findByUsernameByStateActive(String username){
-        return null;
-    }
 }

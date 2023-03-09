@@ -4,6 +4,7 @@ import com.quarke5.ttplayer.controller.interfaces.Controllers;
 import com.quarke5.ttplayer.controller.interfaces.Creators;
 import com.quarke5.ttplayer.controller.interfaces.Messages;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
+import com.quarke5.ttplayer.dto.request.ProfileDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.service.interfaces.ApplicantService;
 import io.swagger.annotations.Api;
@@ -27,16 +28,17 @@ public class ApplicantController implements Controllers<PersonDTO>, Messages, Cr
     @Autowired ApplicantService applicantService;
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id) {
         return applicantService.sendGetPersonByIdRequest(id);
     }
-    @GetMapping("/identification/{identification}")
+
+    @GetMapping(value = "/identification/{identification}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getByDni(@PathVariable String identification) throws ExecutionException, InterruptedException {
         return applicantService.sendGetPersonByIdentification(identification);
     }
 
-    @GetMapping(path = "/userId/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/userId/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getByIdUser(@PathVariable Long id){
         return applicantService.getByIdUserApp(id);
     }
@@ -60,13 +62,12 @@ public class ApplicantController implements Controllers<PersonDTO>, Messages, Cr
 
     @Override
     @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         return applicantService.delete(id);
     }
 
-
-
     @Override
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return applicantService.getAllApplicant();
     }

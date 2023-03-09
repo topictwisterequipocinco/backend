@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public ResponseEntity<?> createJwt(AuthenticationRequest authenticationRequest) throws Exception {
-        User user = userRepository.findByUsernameByStateActive(authenticationRequest.getUsername());
+        User user = userRepository.getEntity(authenticationRequest.getUsername());
         try {
             if (user.getState().equals(State.ACTIVE)){
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));

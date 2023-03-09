@@ -6,6 +6,7 @@ import com.quarke5.ttplayer.dto.response.ResponsePersonDto;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.PersonMapper;
 import com.quarke5.ttplayer.model.Person;
+import com.quarke5.ttplayer.model.User;
 import com.quarke5.ttplayer.repository.impl.PersonDAO;
 import com.quarke5.ttplayer.service.emails.EmailsGoogle;
 import com.quarke5.ttplayer.service.interfaces.ApplicantService;
@@ -86,6 +87,43 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public ResponseEntity<?> getAllPublisher(int numberPage) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return allPersonList(mapper.toPublisherList(publisherService.getAll()));
+    }
+
+    @Override
+    public ResponseEntity<?> getById(Long id) {
+        try{
+            Person person = repository.findById(String.valueOf(id));
+            return ResponseEntity.status(HttpStatus.OK).body(person);
+        }catch (Exception e) {
+            LOGGER.error("No existe la cuenta de la Persona con id: " + id + " " + e.getMessage());
+            errors.logError("No existe la cuenta de la Persona con id: " + id + " " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("person.search.failed",new Object[] {id + e.getMessage()}, null));
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> getByIdentification(String identification) {
+        try{
+            Person person = repository.getEntity(identification);
+            return ResponseEntity.status(HttpStatus.OK).body(person);
+        }catch (Exception e) {
+            LOGGER.error("No existe la cuenta de Persona con identification: " + identification + " " + e.getMessage());
+            errors.logError("No existe la cuenta de Persona con identification: " + identification + " " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("person.search.failed",new Object[] {identification + e.getMessage()}, null));
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> getByIdUser(Long id) {
+        try{
+            User user = userService.findByIdUser(id);
+            Person person = repository.findByUser(user);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper.toResponsePerson(person, messageSource.getMessage("person.response.object.success", null,null)));
+        }catch (Exception e){
+            LOGGER.error("No existe la cuenta de Applicant con id: " + id);
+            errors.logError("No existe la cuenta de Applicant con id: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("applicant.search.failed", new Object[] {id}, null));
+        }
     }
 
     @Override

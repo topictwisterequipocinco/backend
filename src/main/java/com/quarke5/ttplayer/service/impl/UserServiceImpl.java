@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> activateAccount(String username, String hash) {
         try {
-            User user = repository.findByUsernameByState(username);
+            User user = repository.getEntity(username);
             if(user.getVerificationCode().equals(hash)){
                 user.setState(State.ACTIVE);
                 repository.update(user);
@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsernameByStateActive(String username) {
-        return repository.findByUsernameByStateActive(username);
+    public User findByUsernameByStateActive(String username) throws ExecutionException, InterruptedException {
+        return repository.getEntity(username);
     }
 
     @Override

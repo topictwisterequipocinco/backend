@@ -61,9 +61,5 @@ public class Applicant {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "applicantId")
-    private List<JobApplication> jobApplications;
-
 }
 

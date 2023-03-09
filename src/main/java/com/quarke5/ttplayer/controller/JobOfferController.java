@@ -39,7 +39,7 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
         return jobOfferService.getJobOfferById(id);
     }
@@ -79,7 +79,7 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
         return jobOfferService.delete(id);
     }
 
-    @ApiOperation(value = "joboffer.create - Crea un JobOffer nuevo", response = ResponseEntity.class)
+    @ApiOperation(value = "joboffer.create - Crea un JobOffer nuevo. Id del Publisher que publica.", response = ResponseEntity.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = OK_RESPONSE),
             @ApiResponse(code = 201, message = CREATED),
@@ -107,7 +107,7 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll() {
         return jobOfferService.getAll();
     }
@@ -123,7 +123,7 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/published-all")
+    @GetMapping(value = "/published-all", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllPublished() {
         return jobOfferService.getAllPublished();
     }
@@ -155,7 +155,7 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/pending")
+    @GetMapping(value = "/pending", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferPending() {
         return jobOfferService.getJobOfferPending();
     }
@@ -172,7 +172,7 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @PostMapping("/evaluation")
+    @PostMapping(value = "/evaluation", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferAllEvaluation(@RequestBody @Valid JobOfferEvaluationDTO jobOfferEvaluationDTO){
         return jobOfferService.getJobOfferAllEvaluation(jobOfferEvaluationDTO);
     }

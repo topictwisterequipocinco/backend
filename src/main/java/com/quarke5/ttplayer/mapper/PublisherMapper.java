@@ -2,7 +2,9 @@ package com.quarke5.ttplayer.mapper;
 
 import com.quarke5.ttplayer.dto.request.PersonDTO;
 import com.quarke5.ttplayer.dto.response.ResponsePersonDto;
+import com.quarke5.ttplayer.dto.response.UserByFlutterDTO;
 import com.quarke5.ttplayer.exception.PersonException;
+import com.quarke5.ttplayer.model.JobOffer;
 import com.quarke5.ttplayer.model.Publisher;
 import com.quarke5.ttplayer.model.Role;
 import com.quarke5.ttplayer.model.User;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Component
@@ -73,6 +77,22 @@ public class PublisherMapper {
         return dto;
     }
 
+    public UserByFlutterDTO toResponsePublisherFlutter(Publisher app) {
+        UserByFlutterDTO dto = UserByFlutterDTO.builder()
+                .jwt("")
+                .id(Long.valueOf(app.getId()))
+                .name(app.getOficialName())
+                .lastName(app.getLastName())
+                .identification(app.getIdentification())
+                .phone(app.getPhoneNumber())
+                .username(app.getUser().getUsername())
+                .password("")
+                .role(app.getUser().getRole().getRole().toString())
+                .webPage(app.getWebPage())
+                .conected(true)
+                .build();
+        return dto;
+    }
 }
 
 

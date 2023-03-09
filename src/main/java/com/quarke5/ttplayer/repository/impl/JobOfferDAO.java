@@ -89,11 +89,18 @@ public class JobOfferDAO implements DAOS<JobOffer> {
         return document.toObject(JobOffer.class);
     }
 
-    private CollectionReference getCollectionDataBaseFirebase() {
-        return firestore.collection("joboffer");
+    public List<JobOffer> findAllByState(String state) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        List<JobOffer> list = getAllEntities();
+        List<JobOffer> resultList = new ArrayList<>();
+        for(JobOffer jobOffer : list){
+            if(jobOffer.getState().name().equals(state)){
+                resultList.add(jobOffer);
+            }
+        }
+        return resultList;
     }
 
-    public List<JobOffer> findAllByState(String state){
-        return null;
+    private CollectionReference getCollectionDataBaseFirebase() {
+        return firestore.collection("joboffer");
     }
 }

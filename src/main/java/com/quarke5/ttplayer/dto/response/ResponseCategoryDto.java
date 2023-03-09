@@ -15,9 +15,9 @@ public class ResponseCategoryDto {
     private Long id;
     private String name;
     private String description;
-    private LocalDate createDay;
-    private LocalDate modifiedDay;
-    private LocalDate deletedDay;
+    private String createDay;
+    private String modifiedDay;
+    private String deletedDay;
     private boolean deleted;
     private String message;
 }

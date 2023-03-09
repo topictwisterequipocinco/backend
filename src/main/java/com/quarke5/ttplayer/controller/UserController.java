@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class UserController implements Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
         return service.findById(id);
     }
@@ -44,7 +45,7 @@ public class UserController implements Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> allUsers(@RequestParam(name = "page",defaultValue = "0") int page) {
         return service.getAllUsers(page);
     }

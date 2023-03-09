@@ -28,8 +28,9 @@ public class PublisherController implements Controllers<PersonDTO>, Messages, Cr
     PublisherService publisherService;
 
     @Override
-    public ResponseEntity<?> get(Long id) {
-        return null;
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        return publisherService.sendGetPersonByIdRequest(id);
     }
 
     @ApiOperation(value = "${publisher.update} - Modifica un objeto Publisher", response = ResponseEntity.class)
@@ -49,11 +50,13 @@ public class PublisherController implements Controllers<PersonDTO>, Messages, Cr
     }
 
     @Override
-    public ResponseEntity<?> delete(Long id) {
-        return null;
+    @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return publisherService.delete(id);
     }
 
     @Override
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return null;
     }

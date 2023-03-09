@@ -22,5 +22,9 @@ public interface PublisherService extends Removable, Writeable<PersonDTO> {
 
     List<Publisher> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
-    Publisher getPublisherByUser(User user);
+    Publisher getPublisherByUser(User user) throws ExecutionException, InterruptedException;
+
+    ResponseEntity<?> sendGetPersonByIdRequest(Long id);
+
+    Publisher getPublisherById(Long userIdByPublisher);
 }

@@ -31,7 +31,7 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/with-page")
+    @GetMapping(value = "/with-page", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllWithPage(@RequestParam(name = "page",defaultValue = "0") int page) {
         return reportLists.getAllWithPage(page);
     }

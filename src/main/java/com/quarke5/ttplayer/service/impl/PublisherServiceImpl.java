@@ -2,9 +2,11 @@ package com.quarke5.ttplayer.service.impl;
 
 import com.google.cloud.firestore.WriteResult;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
+import com.quarke5.ttplayer.dto.response.UserByFlutterDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.PersonMapper;
 import com.quarke5.ttplayer.mapper.PublisherMapper;
+import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.Person;
 import com.quarke5.ttplayer.model.Publisher;
 import com.quarke5.ttplayer.model.User;
@@ -94,8 +96,25 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public Publisher getPublisherByUser(User user) {
+    public Publisher getPublisherByUser(User user) throws ExecutionException, InterruptedException {
         return repository.findByUser(user);
+    }
+
+    @Override
+    public ResponseEntity<?> sendGetPersonByIdRequest(Long id) {
+        try{
+            Publisher publisher = getPublisherById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(publisher);
+        }catch (Exception e) {
+            LOGGER.error("No existe la cuenta de Publisher con id: " + id + " " + e.getMessage());
+            errors.logError("No existe la cuenta de Publisher con id: " + id + " " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisher.search.failed",new Object[] {id + e.getMessage()}, null));
+        }
+    }
+
+    @Override
+    public Publisher getPublisherById(Long id) {
+        return repository.findById(String.valueOf(id));
     }
 
     private ResponseEntity<?> updatePublisher(Long id, PersonDTO publisherDTO) {

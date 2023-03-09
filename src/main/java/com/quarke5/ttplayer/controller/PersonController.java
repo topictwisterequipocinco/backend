@@ -25,7 +25,6 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/person")
 public class PersonController implements Controllers<PersonDTO>, Messages, Creators<PersonDTO> {
 
-    @Autowired Readable readableService;
     @Autowired PersonService personService;
 
     @Override
@@ -40,9 +39,9 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
-        return readableService.getById(id);
+        return personService.getById(id);
     }
 
     @ApiOperation(value = "${person.getByDni} - Devuelve los datos de una persona por su DNI", response = ResponseEntity.class)
@@ -56,9 +55,9 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/identification/{identification}")
+    @GetMapping(value = "/identification/{identification}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getByDni(@PathVariable String identification) throws ExecutionException, InterruptedException {
-        return readableService.getByIdentification(identification);
+        return personService.getByIdentification(identification);
     }
 
     /**
@@ -68,7 +67,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
      */
     @GetMapping(path = "/userId/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getByIdUser(@PathVariable Long id){
-        return readableService.getByIdUser(id);
+        return personService.getByIdUser(id);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.getAll();
     }
@@ -133,7 +132,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/applicants")
+    @GetMapping(value = "/applicants", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllApplicant(@RequestParam(name = "page",defaultValue = "0") int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.getAllApplicant(page);
     }
@@ -149,7 +148,7 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/publishers")
+    @GetMapping(value = "/publishers", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllPublisher(@RequestParam(name = "page",defaultValue = "0") int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return personService.getAllPublisher(page);
     }

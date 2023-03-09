@@ -2,6 +2,7 @@ package com.quarke5.ttplayer.service.reports.impl;
 
 import com.quarke5.ttplayer.controller.ReportListsController;
 import com.quarke5.ttplayer.dto.response.ResponseJobOfferDto;
+import com.quarke5.ttplayer.dto.response.ResponseJobOfferFlutterDto;
 import com.quarke5.ttplayer.mapper.JobApplicationMapper;
 import com.quarke5.ttplayer.mapper.JobOfferMapper;
 import com.quarke5.ttplayer.model.Applicant;
@@ -50,20 +51,7 @@ public class ReportListsImpl implements ReportLists {
 
     @Override
     public ResponseEntity<?> getAllWithPage(int numberPage) {
-        try {
-            List<JobOffer> jobOffers = jobOfferRepository.getAllEntities();
-            Pageable pageable = generatePageable(numberPage);
-            List<ResponseJobOfferDto> lists = jobOfferMapper.toJobOfferListSimplePublisher(jobOffers);
-            Page<ResponseJobOfferDto> page = new PageImpl<>(lists, pageable, lists.size());
-            List<Link> links = getJobOfferAllLinks(numberPage, page);
-            return ResponseEntity.status(HttpStatus.OK).body(CollectionModel.of(page, links));
-        } catch (Exception e) {
-            LOGGER.error(messageSource.getMessage("joboffer.all.joboffer.failed " + e.getMessage(),
-                    null, null));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(messageSource.getMessage("joboffer.all.joboffer.failed",
-                            null, null));
-        }
+        return null;
     }
 
     @Override
@@ -79,45 +67,57 @@ public class ReportListsImpl implements ReportLists {
 
     @Override
     public ResponseEntity<?> getJobApplicantAllByApplicant(Long id) {
-        try {
-            Applicant applicant = readableService.getPersonTypeApplicantByIdUser(id);
+        /*try {
+            Applicant applicant = applicantService.getApplicantById(id);
             return getResponseEntity(applicant.getJobApplications());
         } catch (Exception e) {
             LOGGER.error(messageSource.getMessage("jobapplicant.all.applicant.failed " + e.getMessage(), null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("jobapplicant.all.applicant.failed", null, null));
         }
+
+         */
+        return null;
     }
 
     @Override
     public ResponseEntity<?> getJobApplicantAllByJobOfferSimplePublisher(Long id) {
-        try {
+        /*try {
             return getResponseEntity(jobOfferRepository.findById(String.valueOf(id)).getJobApplications());
         } catch (Exception e) {
             LOGGER.error(messageSource.getMessage("jobapplicant.all.applicant.failed " + e.getMessage(),null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("jobapplicant.all.applicant.failed",null, null));
         }
+
+         */
+        return null;
     }
 
     @Override
     public ResponseEntity<?> getJobOfferAllByPublisher(Long id) {
-        try {
+        /*try {
             List<JobOffer> jobOffers = readableService.getPersonTypePublisherByIdUser(id).getJobOfferList();
             return ResponseEntity.status(HttpStatus.OK).body(jobOfferMapper.toJobOfferList(jobOffers));
         } catch (Exception e) {
             LOGGER.error(messageSource.getMessage("publisehr.all.joboffer.failed " + e.getMessage(),null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisehr.all.joboffer.failed",null, null));
         }
+
+         */
+        return null;
     }
 
     @Override
     public ResponseEntity<?> getJobOfferAllSimplePublisher(Category filter, Long id) {
-        try {
+        /*try {
             List<JobOffer> jobOffers = readableService.getPersonTypePublisherByIdUser(id).getJobOfferList();
             return ResponseEntity.status(HttpStatus.OK).body(jobOfferMapper.toJobOfferListSimplePublisherByFilter(jobOffers, filter));
         } catch (Exception e) {
             LOGGER.error(messageSource.getMessage("publisehr.all.joboffer.failed " + e.getMessage(),null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("publisehr.all.joboffer.failed",null, null));
         }
+
+         */
+        return null;
     }
 
     private ResponseEntity<?> getResponseEntity(List<JobApplication> jobApplications) {

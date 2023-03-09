@@ -24,9 +24,9 @@ public class ResponseJobOfferDto {
     private TypeModality modality;
     private TypePosition position;
     private String category;
-    private LocalDate datePublished;
-    private LocalDate modifiedDay;
-    private LocalDate deletedDay;
+    private String datePublished;
+    private String modifiedDay;
+    private String deletedDay;
     private boolean deleted;
     private State state;
     private String message;

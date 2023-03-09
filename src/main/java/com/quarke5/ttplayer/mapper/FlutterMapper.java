@@ -20,11 +20,11 @@ public class FlutterMapper {
             dto.setLastName(person.getLastName());
             dto.setIdentification(person.getIdentification());
             dto.setPhone(person.getPhoneNumber());
-            dto.setUsername(user.getUsername());
-            dto.setPassword(user.getPassword());
-            dto.setId(Long.valueOf(user.getId()));
-            dto.setRole(String.valueOf(user.getRole().getRole()));
-            dto.setConected(user.isConected());
+            dto.setUsername(person.getUser().getUsername());
+            dto.setPassword(person.getUser().getPassword());
+            dto.setId(Long.valueOf(person.getUser().getId()));
+            dto.setRole(String.valueOf(person.getUser().getRole().getRole()));
+            dto.setConected(person.getUser().isConected());
             dto.setGenre("");
             dto.setBirthDate("");
             dto.setTypeStudent("");
@@ -34,11 +34,11 @@ public class FlutterMapper {
             dto.setLastName(app.getLastName());
             dto.setIdentification(app.getIdentification());
             dto.setPhone(app.getPhoneNumber());
-            dto.setUsername(user.getUsername());
-            dto.setPassword(user.getPassword());
-            dto.setId(Long.valueOf(user.getId()));
-            dto.setRole(String.valueOf(user.getRole().getRole()));
-            dto.setConected(user.isConected());
+            dto.setUsername(app.getUser().getUsername());
+            dto.setPassword(app.getUser().getPassword());
+            dto.setId(Long.valueOf(app.getUser().getId()));
+            dto.setRole(String.valueOf(app.getUser().getRole().getRole()));
+            dto.setConected(app.getUser().isConected());
             dto.setGenre(app.getGenre().name());
             dto.setBirthDate(app.getBirthDate().toString());
             dto.setTypeStudent(app.getTypeStudent().name());
@@ -48,11 +48,11 @@ public class FlutterMapper {
             dto.setLastName(pub.getLastName());
             dto.setIdentification(pub.getIdentification());
             dto.setPhone(pub.getPhoneNumber());
-            dto.setUsername(user.getUsername());
-            dto.setPassword(user.getPassword());
-            dto.setId(Long.valueOf(user.getId()));
-            dto.setRole(String.valueOf(user.getRole().getRole()));
-            dto.setConected(user.isConected());
+            dto.setUsername(pub.getUser().getUsername());
+            dto.setPassword(pub.getUser().getPassword());
+            dto.setId(Long.valueOf(pub.getUser().getId()));
+            dto.setRole(String.valueOf(pub.getUser().getRole().getRole()));
+            dto.setConected(pub.getUser().isConected());
             dto.setWebPage(pub.getWebPage());
             dto.setGenre("");
             dto.setBirthDate("");
@@ -113,13 +113,13 @@ public class FlutterMapper {
                 .description(jobOffer.getDescription())
                 .body(jobOffer.getBody())
                 .area(jobOffer.getArea())
-                .datePublished(String.valueOf(jobOffer.getCreateDay()))
-                .modifiedDay(String.valueOf(jobOffer.getModifiedDay()))
-                .deletedDay(String.valueOf(jobOffer.getDeletedDay()))
+                .datePublished(jobOffer.getCreateDay())
+                .modifiedDay(jobOffer.getModifiedDay())
+                .deletedDay(jobOffer.getDeletedDay())
                 .experience(jobOffer.getExperience())
-                .modality(String.valueOf(jobOffer.getModality()))
-                .position(String.valueOf(jobOffer.getPosition()))
-                .state(String.valueOf(jobOffer.getState()))
+                .modality(jobOffer.getModality().name())
+                .position(jobOffer.getPosition().name())
+                .state(jobOffer.getState().name())
                 .category(jobOffer.getCategory().getName())
                 .message(message)
                 .build();
@@ -137,11 +137,13 @@ public class FlutterMapper {
         dto.setPassword("");
         dto.setRole(body.getRole());
         dto.setGenre(body.getGenre() != null ? body.getGenre().name() : "");
-        dto.setBirthDate(body.getBirthDate() != null ? body.getBirthDate().toString() : "");
+        dto.setBirthDate(body.getBirthDate() != null ? String.valueOf(body.getBirthDate()) : "");
         dto.setTypeStudent(body.getTypeStudent() != null ? body.getTypeStudent().name() : "");
         dto.setWebPage(body.getWebPage() != null ? body.getWebPage() : "");
         dto.setConected(true);
         return dto;
     }
+
+
 
 }

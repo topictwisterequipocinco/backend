@@ -2,8 +2,10 @@ package com.quarke5.ttplayer.mapper;
 
 import com.quarke5.ttplayer.dto.request.PersonDTO;
 import com.quarke5.ttplayer.dto.response.ResponsePersonDto;
+import com.quarke5.ttplayer.dto.response.UserByFlutterDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.model.Applicant;
+import com.quarke5.ttplayer.model.JobApplication;
 import com.quarke5.ttplayer.model.Role;
 import com.quarke5.ttplayer.model.User;
 import com.quarke5.ttplayer.model.enums.Genre;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Component

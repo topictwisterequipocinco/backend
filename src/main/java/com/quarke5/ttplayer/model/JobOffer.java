@@ -79,10 +79,6 @@ public class JobOffer {
     @JoinColumn(name="publisherId")
     private Publisher publisher;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "jobofferId")
-    private List<JobApplication> jobApplications;
-
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "categoryId")
     private Category category;

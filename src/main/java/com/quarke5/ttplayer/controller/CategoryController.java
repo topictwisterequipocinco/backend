@@ -38,7 +38,7 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
         return categoryService.getById(id);
     }
@@ -106,7 +106,7 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll(){
         return categoryService.getAll();
     }
@@ -122,7 +122,7 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/by-names")
+    @GetMapping(value = "/by-names", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getFiltersAllCategories(){
         return categoryService.getFiltersAllCategories();
     }

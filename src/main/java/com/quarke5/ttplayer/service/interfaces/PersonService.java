@@ -21,4 +21,9 @@ public interface PersonService extends Removable, Writeable<PersonDTO> {
 
     ResponseEntity<?> getAllPublisher(int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
+    ResponseEntity<?> getById(Long id);
+
+    ResponseEntity<?> getByIdentification(String identification);
+
+    ResponseEntity<?> getByIdUser(Long id);
 }

@@ -67,7 +67,7 @@ public class AuthenticationController implements Messages {
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
             @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
     })
-    @GetMapping("/activate/{username}/{hash}")
+    @GetMapping(value = "/activate/{username}/{hash}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> activateNewUser(@PathVariable String username, @PathVariable String hash){
         return userService.activateAccount(username, hash);
     }

@@ -16,8 +16,8 @@ import java.time.LocalDate;
 @Builder
 public class ResponseJobApplicationDto {
     private Long jobOfferApplicantID;
-    private LocalDate applied;
-    private LocalDate deletedDay;
+    private String applied;
+    private String deletedDay;
     private boolean jobAppdeleted;
     private Long applicantID;
     private String name;
@@ -36,9 +36,9 @@ public class ResponseJobApplicationDto {
     private TypePosition position;
     private String category;
     private String categoryDescription;
-    private LocalDate datePublished;
-    private LocalDate modifiedDay;
-    private LocalDate jobOfferDeletedDay;
+    private String datePublished;
+    private String modifiedDay;
+    private String jobOfferDeletedDay;
     private boolean jobOfferDeleted;
     private State state;
 }

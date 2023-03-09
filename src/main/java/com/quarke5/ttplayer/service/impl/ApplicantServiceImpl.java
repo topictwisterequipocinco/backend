@@ -2,6 +2,8 @@ package com.quarke5.ttplayer.service.impl;
 
 import com.google.cloud.firestore.WriteResult;
 import com.quarke5.ttplayer.dto.request.PersonDTO;
+import com.quarke5.ttplayer.dto.request.ProfileDTO;
+import com.quarke5.ttplayer.dto.response.UserByFlutterDTO;
 import com.quarke5.ttplayer.exception.PersonException;
 import com.quarke5.ttplayer.mapper.ApplicantMapper;
 import com.quarke5.ttplayer.model.Applicant;
@@ -100,13 +102,27 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public ResponseEntity<?> sendGetPersonByIdentification(String identification) {
-        return null;
+    public ResponseEntity<?> sendGetPersonByIdentification(String identification) throws ExecutionException, InterruptedException {
+        try{
+            Applicant applicant = repository.getEntity(identification);
+            return ResponseEntity.status(HttpStatus.OK).body(applicant);
+        }catch (Exception e) {
+            LOGGER.error("No existe la cuenta de Applicant con identification: " + identification + " " + e.getMessage());
+            errors.logError("No existe la cuenta de Applicant con identification: " + identification + " " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("applicant.search.failed",new Object[] {identification + e.getMessage()}, null));
+        }
     }
 
     @Override
     public ResponseEntity<?> sendGetPersonByIdRequest(Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(getApplicant(id));
+        try{
+            Applicant applicant = repository.findById(String.valueOf(id));
+            return ResponseEntity.status(HttpStatus.OK).body(applicant);
+        }catch (Exception e) {
+            LOGGER.error("No existe la cuenta de Applicant con id: " + id + " " + e.getMessage());
+            errors.logError("No existe la cuenta de Applicant con id: " + id + " " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("applicant.search.failed",new Object[] {id + e.getMessage()}, null));
+        }
     }
 
     @Override
@@ -118,6 +134,11 @@ public class ApplicantServiceImpl implements ApplicantService {
             errors.logError(messageSource.getMessage("person.all.failed " + e.getMessage(),null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("person.all.failed",null, null));
         }
+    }
+
+    @Override
+    public Applicant getApplicantById(Long id) {
+        return repository.findById(String.valueOf(id));
     }
 
     public ResponseEntity<?> updateApplicant(Long id, PersonDTO applicantDTO) {

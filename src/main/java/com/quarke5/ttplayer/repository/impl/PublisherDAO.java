@@ -89,8 +89,10 @@ public class PublisherDAO implements DAOS<Publisher> {
         return document.toObject(Publisher.class);
     }
 
-    public Publisher findByUser(User user){
-        return null;
+    public Publisher findByUser(User user) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("user", user).get();
+        QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST);
+        return document.toObject(Publisher.class);
     }
 
     private CollectionReference getCollectionDataBaseFirebase() {

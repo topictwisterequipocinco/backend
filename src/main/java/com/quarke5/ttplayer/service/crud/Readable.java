@@ -15,5 +15,5 @@ public interface Readable {
 
     Applicant getPersonTypeApplicantByIdUser(Long id) throws ExecutionException, InterruptedException;
 
-    Publisher getPersonTypePublisherByIdUser(Long id);
+    Publisher getPersonTypePublisherByIdUser(Long id) throws ExecutionException, InterruptedException;
 }

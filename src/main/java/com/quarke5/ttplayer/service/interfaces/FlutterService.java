@@ -27,10 +27,10 @@ public interface FlutterService {
 
     ResponseEntity<?> getProfileById(ProfileDTO profileDTO);
 
-    void updatePerson(ProfileDTO profileDTO);
+    void updatePerson(Long id, PersonDTO personDTO);
 
     void deletePerson(ProfileDTO profileDTO);
 
-    ResponseEntity<?> updateJobOffer(JobOfferFlutterDTO jobOfferFlutterDTO);
+    ResponseEntity<?> updateJobOffer(Long id, JobOfferFlutterDTO jobOfferFlutterDTO);
 
 }
