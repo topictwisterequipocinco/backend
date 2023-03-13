@@ -2,6 +2,7 @@ package com.quarke5.ttplayer.service.impl;
 
 import com.google.cloud.firestore.WriteResult;
 import com.quarke5.ttplayer.dto.response.ResponseJobApplicationDto;
+import com.quarke5.ttplayer.dto.response.ResponseJobApplicationFlutterDto;
 import com.quarke5.ttplayer.mapper.JobApplicationMapper;
 import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.JobApplication;
@@ -53,8 +54,8 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
-    public void createJobApplication(Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        JobApplication job = jobApplicationMapper.toModelJobApplication(applicant, jobOffer, getLastId());
+    public boolean verifyJobApplicationExists(Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        boolean isExist = false;
 
         for (JobApplication ele : repository.getAllEntities()) {
             if (ele.getJobOffer().getTitle().equals(jobOffer.getTitle())) {
@@ -62,19 +63,27 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                         " con el aviso " + jobOffer.getTitle());
                 System.out.println("La Aplicacion ya existe de " + applicant.getIdentification() +
                         " con el aviso " + jobOffer.getTitle());
+                isExist = true;
                 break;
             }
         }
+        return isExist;
+    }
+
+    @Override
+    public void createJobApplication(Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        JobApplication job = jobApplicationMapper.toModelJobApplication(applicant, jobOffer, getLastId());
         WriteResult jobResult = repository.create(job);
-        LOGGER.info("Se a creado exitosamente el jobapplication con " + applicant.getIdentification() +
-                " con el aviso " + jobOffer.getTitle());
-        System.out.println("Se a creado exitosamente el jobapplication con " + applicant.getIdentification() +
-                " con el aviso " + jobOffer.getTitle());
     }
 
     @Override
     public List<ResponseJobApplicationDto> getListToResponseJobApplication(List<JobApplication> jobApplicationList) {
         return jobApplicationMapper.toResponseJobApplication(jobApplicationList);
+    }
+
+    @Override
+    public List<ResponseJobApplicationFlutterDto> getListToResponseJobApplicationFlutter(List<JobApplication> jobApplicationList, String message) {
+        return jobApplicationMapper.toResponseJobApplicationFlutter(jobApplicationList, message);
     }
 
     private int getLastId() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {

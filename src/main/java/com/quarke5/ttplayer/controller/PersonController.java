@@ -37,7 +37,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
@@ -53,7 +54,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/identification/{identification}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getByDni(@PathVariable String identification) throws ExecutionException, InterruptedException {
@@ -80,7 +82,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PersonDTO personDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -97,7 +100,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> delete(@PathVariable Long id){
@@ -114,7 +118,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll() throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -130,7 +135,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/applicants", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllApplicant(@RequestParam(name = "page",defaultValue = "0") int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -146,7 +152,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/publishers", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllPublisher(@RequestParam(name = "page",defaultValue = "0") int page) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -163,7 +170,8 @@ public class PersonController implements Controllers<PersonDTO>, Messages, Creat
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> create(@RequestBody @Valid PersonDTO personDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {

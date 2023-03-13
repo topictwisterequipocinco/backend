@@ -37,7 +37,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
@@ -55,7 +56,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid JobOfferDTO jobOfferDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -72,7 +74,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> delete(@PathVariable Long id){
@@ -88,7 +91,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> createJob(@PathVariable Long id, @RequestBody @Valid JobOfferDTO jobOfferDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -105,7 +109,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll() {
@@ -121,7 +126,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/published-all", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllPublished() {
@@ -137,7 +143,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/postulate", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> postulate(@RequestBody @Valid PostulateDTO postulateDTO){
@@ -153,7 +160,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/pending", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferPending() {
@@ -170,7 +178,8 @@ public class JobOfferController implements Controllers<JobOfferDTO>, Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/evaluation", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferAllEvaluation(@RequestBody @Valid JobOfferEvaluationDTO jobOfferEvaluationDTO){

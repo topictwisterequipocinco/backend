@@ -19,7 +19,7 @@ public interface FlutterService {
 
     ResponseEntity<?> getJobOfferAllByPublisher(Long id);
 
-    ResponseEntity<?> getAllAppliedByJobOffer(Long id);
+    ResponseEntity<?> getAllAppliedByJobOfferByFlutter(Long id);
 
     ResponseEntity<?> getJobOfferEvaluation(JobOfferEvaluationFlutterDTO dto);
 

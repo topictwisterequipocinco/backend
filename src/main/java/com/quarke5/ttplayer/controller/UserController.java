@@ -27,7 +27,8 @@ public class UserController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
@@ -43,7 +44,8 @@ public class UserController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> allUsers(@RequestParam(name = "page",defaultValue = "0") int page) {

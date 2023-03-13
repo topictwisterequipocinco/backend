@@ -9,4 +9,5 @@ public interface Messages {
     String NOT_FOUND_RESPONSE = "El recurso buscado no existe o no se encuentra disponible.";
     String NOT_ACCEPTABLE = "Desaprobada tu petición, no se acepta.";
     String NOT_MODIFIED = "El objeto enviado no ha podido ser modificado";
+    String SERVICE_UNAVAILABLE = "Falla en el sistema, intente nuevamente mas tarde. Disculpe las molestias.";
 }

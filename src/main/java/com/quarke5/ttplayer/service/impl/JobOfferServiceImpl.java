@@ -152,16 +152,30 @@ public class JobOfferServiceImpl implements JobOfferService {
 
     @Override
     public ResponseEntity<?> postulate(PostulateDTO postulateDTO) {
-        try {
+        try{
             Applicant applicant = applicantService.getApplicantById(postulateDTO.getApplicantID());
             JobOffer jobOffer = getJobOffer(postulateDTO.getJobofferID());
-            jobApplicationService.createJobApplication(applicant, jobOffer);
-            emailGoogleService.createEmailPostulate(jobOffer, applicant);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(messageSource.getMessage("applicant.postulate.success", null, null));
-        } catch (Exception e) {
-            LOGGER.error(messageSource.getMessage("applicant.postulate.failed " + e.getMessage(), new Object[]{postulateDTO.getJobofferID()}, null));
-            errors.logError(messageSource.getMessage("applicant.postulate.failed " + e.getMessage(), new Object[]{postulateDTO.getJobofferID()}, null));
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("applicant.postulate.failed", new Object[]{postulateDTO.getJobofferID()}, null));
+            return createJobApplicant(applicant, jobOffer);
+        }catch (Exception e){
+            LOGGER.error("No existe el estudiante " + postulateDTO.getApplicantID() + " o no existe el aviso " + postulateDTO.getJobofferID());
+            System.out.println("No existe el estudiante " + postulateDTO.getApplicantID() + " o no existe el aviso " + postulateDTO.getJobofferID());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("applicant.postulate.failed", new Object[]{postulateDTO.getJobofferID() + " " + e.getMessage()}, null));
+        }
+    }
+
+    private ResponseEntity<?> createJobApplicant(Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if(!jobApplicationService.verifyJobApplicationExists(applicant, jobOffer)){
+            try {
+                jobApplicationService.createJobApplication(applicant, jobOffer);
+                emailGoogleService.createEmailPostulate(jobOffer, applicant);
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(messageSource.getMessage("applicant.postulate.success", null, null));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(messageSource.getMessage("system.failed", null, null));
+            }
+        }else {
+            LOGGER.error("No se ha realizado la postulacion porque ya esta postulado al aviso " + jobOffer.getTitle());
+            errors.logError("No se ha realizado la postulacion porque ya esta postulado al aviso " + jobOffer.getTitle());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(messageSource.getMessage("applicant.postulate.isPostulated", new Object[]{jobOffer.getId() + " " + jobOffer.getTitle()}, null));
         }
     }
 

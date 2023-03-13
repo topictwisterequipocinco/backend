@@ -33,7 +33,8 @@ public class AuthenticationController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/login", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -49,7 +50,8 @@ public class AuthenticationController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/forgot", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> changePassword(@RequestBody @Valid ForgotDTO forgotDTO) throws Exception {
@@ -65,7 +67,8 @@ public class AuthenticationController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/activate/{username}/{hash}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> activateNewUser(@PathVariable String username, @PathVariable String hash){

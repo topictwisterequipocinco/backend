@@ -51,7 +51,7 @@ public class FlutterController {
     @ApiOperation(value = "flutter.getAllAppliedByJobOffer - Publisher: Ver quien se aplico en cada aviso. El Id es el del aviso a consultar", response = ResponseEntity.class)
     @GetMapping(value = "/jobapplicants-by-my-offers/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllAppliedByJobOffer(@PathVariable Long id){
-        return flutterService.getAllAppliedByJobOffer(id);
+        return flutterService.getAllAppliedByJobOfferByFlutter(id);
     }
 
     @ApiOperation(value = "flutter.getJobOfferEvaluation -UTN: Es la respuesta de UTN" +

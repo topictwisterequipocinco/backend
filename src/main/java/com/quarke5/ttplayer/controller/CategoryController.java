@@ -36,7 +36,8 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get(@PathVariable Long id){
@@ -53,7 +54,8 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryDTO categoryDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -70,7 +72,8 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> delete(@PathVariable Long id){
@@ -87,7 +90,8 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @PostMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> create(@RequestBody @Valid CategoryDTO categoryDTO) throws PersonException, ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
@@ -104,7 +108,8 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAll(){
@@ -120,7 +125,8 @@ public class CategoryController implements Controllers<CategoryDTO>, Messages, C
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/by-names", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getFiltersAllCategories(){

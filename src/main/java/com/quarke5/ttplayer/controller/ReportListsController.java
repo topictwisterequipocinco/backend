@@ -29,7 +29,8 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/with-page", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllWithPage(@RequestParam(name = "page",defaultValue = "0") int page) {
@@ -45,7 +46,8 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/jobapplicants/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobApplicantAllByApplicant(@PathVariable Long id){
@@ -61,7 +63,8 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(value = "/jobapplicants-by-my-offers/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobApplicantAllByJobOfferSimplePublisher(@PathVariable Long id){
@@ -77,7 +80,8 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(path = "/publisher/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferAllByPublisher(@PathVariable Long id) {
@@ -94,7 +98,8 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(path = "/publisher/filter/{filter}/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferAllSimplePublisher(@RequestParam Category filter, @PathVariable Long id) {
@@ -110,7 +115,8 @@ public class ReportListsController implements Messages {
             @ApiResponse(code = 401, message = UNAUTHORIZED_RESPONSE),
             @ApiResponse(code = 403, message = FORBIDDEN_RESPONSE),
             @ApiResponse(code = 404, message = NOT_FOUND_RESPONSE),
-            @ApiResponse(code = 406, message = NOT_ACCEPTABLE)
+            @ApiResponse(code = 406, message = NOT_ACCEPTABLE),
+            @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE),
     })
     @GetMapping(path = "/filter/{state}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getJobOfferAllWithFilter(@PathVariable String state){

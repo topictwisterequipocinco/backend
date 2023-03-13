@@ -1,6 +1,7 @@
 package com.quarke5.ttplayer.service.interfaces;
 
 import com.quarke5.ttplayer.dto.response.ResponseJobApplicationDto;
+import com.quarke5.ttplayer.dto.response.ResponseJobApplicationFlutterDto;
 import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.JobApplication;
 import com.quarke5.ttplayer.model.JobOffer;
@@ -14,8 +15,12 @@ public interface JobApplicationService {
 
     List<JobApplication> findJobApplicantByJobOffer(Long jobofferId) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
+    boolean verifyJobApplicationExists(Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+
     void createJobApplication(Applicant applicant, JobOffer jobOffer) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
-
     List<ResponseJobApplicationDto> getListToResponseJobApplication(List<JobApplication> jobApplicationList);
+
+    List<ResponseJobApplicationFlutterDto> getListToResponseJobApplicationFlutter(List<JobApplication> jobApplicationList, String message);
+
 }

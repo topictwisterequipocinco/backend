@@ -94,7 +94,8 @@ public class FlutterServiceImpl implements FlutterService, Urls {
         try {
             Applicant applicant = applicantService.getApplicantById(id);
             List<JobApplication> jobApplicationList = jobApplicationService.findJobApplicantByApplicant(applicant);
-            return ResponseEntity.status(HttpStatus.OK).body(jobApplicationService.getListToResponseJobApplication(jobApplicationList));
+            return ResponseEntity.status(HttpStatus.OK).body(jobApplicationService.getListToResponseJobApplicationFlutter(jobApplicationList,
+                    messageSource.getMessage("jobapplicant.all.applicant.success", null, null)));
         } catch (Exception e) {
             LOGGER.error(messageSource.getMessage("jobapplicant.all.applicant.failed " + e.getMessage(), null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("jobapplicant.all.applicant.failed", null, null));
@@ -114,10 +115,11 @@ public class FlutterServiceImpl implements FlutterService, Urls {
     }
 
     @Override
-    public ResponseEntity<?> getAllAppliedByJobOffer(Long jobofferId) {
+    public ResponseEntity<?> getAllAppliedByJobOfferByFlutter(Long jobofferId) {
         try {
             List<JobApplication> jobApplicationList = jobApplicationService.findJobApplicantByJobOffer(jobofferId);
-            return ResponseEntity.status(HttpStatus.OK).body(jobApplicationService.getListToResponseJobApplication(jobApplicationList));
+            return ResponseEntity.status(HttpStatus.OK).body(jobApplicationService.getListToResponseJobApplicationFlutter(jobApplicationList,
+                    messageSource.getMessage("jobapplicant.all.applicant.success", null, null)));
         } catch (Exception e) {
             LOGGER.error(messageSource.getMessage("jobapplicant.all.applicant.failed " + e.getMessage(),null, null));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSource.getMessage("jobapplicant.all.applicant.failed",null, null));
