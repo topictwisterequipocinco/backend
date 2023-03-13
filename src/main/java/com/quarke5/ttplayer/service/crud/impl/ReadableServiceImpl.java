@@ -58,7 +58,7 @@ public class ReadableServiceImpl implements Readable {
     }
 
     @Override
-    public ResponseEntity<?> getByIdUser(Long id) {
+    public ResponseEntity<?> getByIdUser(Long id) throws ExecutionException, InterruptedException {
         User user = getUserById(id);
         Person person = repository.findByUser(user);
         if (person.getUser().getRole().getRole().equals(Roles.APPLICANT)) {

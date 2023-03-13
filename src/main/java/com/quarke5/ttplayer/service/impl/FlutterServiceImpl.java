@@ -68,7 +68,7 @@ public class FlutterServiceImpl implements FlutterService, Urls {
             }else if (user.getRole().getRole().equals(Roles.PUBLISHER)){
                 pub = publisherService.getPublisherByUser(user);
             }else{
-                person = personService.getPersonByUsername(user.getUsername());
+                person = personService.getPersonByUser(user);
             }
             return ResponseEntity.status(HttpStatus.OK).body(flutterMapper.responseLoginUserJasonByFlutter(userChanged, jwt, person, app, pub));
         }else {
@@ -92,7 +92,7 @@ public class FlutterServiceImpl implements FlutterService, Urls {
     @Override
     public ResponseEntity<?> getJobApplicantAllByApplicantByFlutter(Long id) {
         try {
-            Applicant applicant = applicantService.getApplicantById(id);
+            Applicant applicant = applicantService.getApplicantById(String.valueOf(id));
             List<JobApplication> jobApplicationList = jobApplicationService.findJobApplicantByApplicant(applicant);
             return ResponseEntity.status(HttpStatus.OK).body(jobApplicationService.getListToResponseJobApplicationFlutter(jobApplicationList,
                     messageSource.getMessage("jobapplicant.all.applicant.success", null, null)));
@@ -188,7 +188,7 @@ public class FlutterServiceImpl implements FlutterService, Urls {
     @Override
     public ResponseEntity<?> updateJobOffer(Long id, JobOfferFlutterDTO jobOfferFlutterDTO) {
         try {
-            JobOffer jobOffer =  jobOfferService.getJobOffer(id);
+            JobOffer jobOffer =  jobOfferService.getJobOffer(String.valueOf(id));
             JobOffer newJobOffer = jobOfferService.updateJobOffer(jobOffer, jobOfferFlutterDTO);
             jobOfferService.saveJobOffer(newJobOffer);
             return ResponseEntity.status(HttpStatus.OK)

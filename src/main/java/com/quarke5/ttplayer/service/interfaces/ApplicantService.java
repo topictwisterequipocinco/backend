@@ -32,5 +32,5 @@ public interface ApplicantService extends Removable, Writeable<PersonDTO> {
     ResponseEntity<?> getAllApplicant();
 
 
-    Applicant getApplicantById(Long id);
+    Applicant getApplicantById(String id);
 }

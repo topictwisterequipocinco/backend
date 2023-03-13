@@ -16,13 +16,14 @@ public class FlutterMapper {
     public UserByFlutterDTO responseLoginUserJasonByFlutter(User user, String jwt, Person person, Applicant app, Publisher pub) {
         UserByFlutterDTO dto = new UserByFlutterDTO(jwt);
         if(person != null){
+            dto.setId(Long.valueOf(person.getUser().getId()));
+            dto.setPersonId(person.getId());
             dto.setName(person.getOficialName());
             dto.setLastName(person.getLastName());
             dto.setIdentification(person.getIdentification());
             dto.setPhone(person.getPhoneNumber());
             dto.setUsername(person.getUser().getUsername());
             dto.setPassword(person.getUser().getPassword());
-            dto.setId(Long.valueOf(person.getUser().getId()));
             dto.setRole(String.valueOf(person.getUser().getRole().getRole()));
             dto.setConected(person.getUser().isConected());
             dto.setGenre("");
@@ -30,13 +31,14 @@ public class FlutterMapper {
             dto.setTypeStudent("");
             dto.setWebPage("");
         }else if(app != null){
+            dto.setId(Long.valueOf(app.getUser().getId()));
+            dto.setPersonId(app.getId());
             dto.setName(app.getOficialName());
             dto.setLastName(app.getLastName());
             dto.setIdentification(app.getIdentification());
             dto.setPhone(app.getPhoneNumber());
             dto.setUsername(app.getUser().getUsername());
             dto.setPassword(app.getUser().getPassword());
-            dto.setId(Long.valueOf(app.getUser().getId()));
             dto.setRole(String.valueOf(app.getUser().getRole().getRole()));
             dto.setConected(app.getUser().isConected());
             dto.setGenre(app.getGenre().name());
@@ -44,13 +46,14 @@ public class FlutterMapper {
             dto.setTypeStudent(app.getTypeStudent().name());
             dto.setWebPage("");
         }else if(pub != null){
+            dto.setId(Long.valueOf(pub.getUser().getId()));
+            dto.setPersonId(pub.getId());
             dto.setName(pub.getOficialName());
             dto.setLastName(pub.getLastName());
             dto.setIdentification(pub.getIdentification());
             dto.setPhone(pub.getPhoneNumber());
             dto.setUsername(pub.getUser().getUsername());
             dto.setPassword(pub.getUser().getPassword());
-            dto.setId(Long.valueOf(pub.getUser().getId()));
             dto.setRole(String.valueOf(pub.getUser().getRole().getRole()));
             dto.setConected(pub.getUser().isConected());
             dto.setWebPage(pub.getWebPage());

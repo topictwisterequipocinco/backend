@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class UserByFlutterDTO {
     private final String jwt;
     private Long id;
+    private String personId;
     private String name;
     private String lastName;
     private String identification;

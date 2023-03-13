@@ -6,7 +6,6 @@ import com.quarke5.ttplayer.exception.JobOfferException;
 import com.quarke5.ttplayer.mapper.JobOfferMapper;
 import com.quarke5.ttplayer.model.*;
 import com.quarke5.ttplayer.model.enums.State;
-import com.quarke5.ttplayer.repository.impl.JobApplicantDAO;
 import com.quarke5.ttplayer.repository.impl.JobOfferDAO;
 import com.quarke5.ttplayer.service.crud.Readable;
 import com.quarke5.ttplayer.service.emails.EmailsGoogle;
@@ -51,7 +50,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public ResponseEntity<?> getJobOfferById(Long id) {
         try {
-            JobOffer jobOffer = getJobOffer(id);
+            JobOffer jobOffer = getJobOffer(String.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                     mapper.toResponsePublisherJobOffer(jobOffer, messageSource.getMessage("joboffer.response.object.success", null, null)));
         } catch (Exception e) {
@@ -64,7 +63,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public ResponseEntity<?> update(Long userIdByPublisher, JobOfferDTO jobOfferDTO) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         if(jobOfferDTO.getId() != null && jobOfferDTO.getId() > ZERO){
-            JobOffer jobOffer = getJobOffer(jobOfferDTO.getId());
+            JobOffer jobOffer = getJobOffer(String.valueOf(jobOfferDTO.getId()));
             return updateJobOffer(jobOffer, jobOfferDTO);
         }else {
             return create(userIdByPublisher, jobOfferDTO);
@@ -91,7 +90,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public ResponseEntity<?> delete(Long id) {
         try {
-            JobOffer jobOffer = getJobOffer(id);
+            JobOffer jobOffer = getJobOffer(String.valueOf(id));
             jobOffer.setDeleted(true);
             jobOffer.setDeletedDay(String.valueOf(LocalDate.now()));
             repository.update(jobOffer);
@@ -195,8 +194,8 @@ public class JobOfferServiceImpl implements JobOfferService {
         }
     }
     @Override
-    public JobOffer getJobOffer(Long id) {
-        return repository.findById(String.valueOf(id));
+    public JobOffer getJobOffer(String id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -224,7 +223,6 @@ public class JobOfferServiceImpl implements JobOfferService {
                 resultList.add(jobOffer);
             }
         }
-        LOGGER.info("Tamaño de la lista de avisos para el publicador nro " + publisherID + " " + resultList.size());
         return resultList;
     }
 

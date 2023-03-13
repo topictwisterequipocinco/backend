@@ -2,6 +2,7 @@ package com.quarke5.ttplayer.service.interfaces;
 
 import com.quarke5.ttplayer.dto.request.PersonDTO;
 import com.quarke5.ttplayer.model.Person;
+import com.quarke5.ttplayer.model.User;
 import com.quarke5.ttplayer.service.crud.Removable;
 import com.quarke5.ttplayer.service.crud.Writeable;
 import org.springframework.http.ResponseEntity;
@@ -26,4 +27,6 @@ public interface PersonService extends Removable, Writeable<PersonDTO> {
     ResponseEntity<?> getByIdentification(String identification);
 
     ResponseEntity<?> getByIdUser(Long id);
+
+    Person getPersonByUser(User user) throws ExecutionException, InterruptedException;
 }

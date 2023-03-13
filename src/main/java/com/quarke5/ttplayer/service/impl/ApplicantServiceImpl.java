@@ -137,8 +137,8 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Applicant getApplicantById(Long id) {
-        return repository.findById(String.valueOf(id));
+    public Applicant getApplicantById(String id) {
+        return repository.findById(id);
     }
 
     public ResponseEntity<?> updateApplicant(Long id, PersonDTO applicantDTO) {

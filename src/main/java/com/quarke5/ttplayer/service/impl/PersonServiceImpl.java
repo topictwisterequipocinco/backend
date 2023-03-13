@@ -127,8 +127,14 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public Person getPersonByUser(User user) throws ExecutionException, InterruptedException {
+        return repository.findByUser(user);
+    }
+
+    @Override
     public Person getPersonByUsername(String username) throws ExecutionException, InterruptedException {
-        return repository.findByUser(userService.findByUsername(username));
+        User user = userService.findByUsername(username);
+        return repository.findByUsername(user.getUsername());
     }
 
     private ResponseEntity<?> updatePerson(Long id, PersonDTO personDTO) {

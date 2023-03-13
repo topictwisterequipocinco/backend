@@ -5,6 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.quarke5.ttplayer.model.Applicant;
 import com.quarke5.ttplayer.model.Person;
+import com.quarke5.ttplayer.model.Publisher;
 import com.quarke5.ttplayer.model.User;
 import com.quarke5.ttplayer.repository.DAOS;
 import com.quarke5.ttplayer.util.Errors;
@@ -89,13 +90,20 @@ public class PersonDAO implements DAOS<Person> {
         return document.toObject(Person.class);
     }
 
-    public Person findByUser(User user){
-        return null;
+    public Person findByUser(User user) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("user", user).get();
+        QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST);
+        return document.toObject(Person.class);
+    }
+
+    public Person findByUsername(String username) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = getCollectionDataBaseFirebase().whereEqualTo("username", username).get();
+        QueryDocumentSnapshot document = future.get().getDocuments().get(FIRST);
+        return document.toObject(Person.class);
     }
 
     private CollectionReference getCollectionDataBaseFirebase() {
         return firestore.collection("person");
     }
-
 
 }

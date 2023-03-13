@@ -9,6 +9,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 public class PostulateDTO {
-    private Long applicantID;
-    private Long jobofferID;
+    private String applicantID;
+    private String jobofferID;
 }

@@ -11,7 +11,7 @@ public interface Readable {
 
     ResponseEntity<?> getByIdentification(String identification) throws ExecutionException, InterruptedException;
 
-    ResponseEntity<?> getByIdUser(Long id);
+    ResponseEntity<?> getByIdUser(Long id) throws ExecutionException, InterruptedException;
 
     Applicant getPersonTypeApplicantByIdUser(Long id) throws ExecutionException, InterruptedException;
 

@@ -30,7 +30,7 @@ public interface JobOfferService extends Removable, Writeable<JobOfferDTO> {
 
     ResponseEntity<?> getJobOfferAllEvaluation(JobOfferEvaluationDTO jobOfferEvaluationDTO);
 
-    JobOffer getJobOffer(Long id);
+    JobOffer getJobOffer(String id);
 
     JobOffer updateJobOffer(JobOffer jobOffer, JobOfferFlutterDTO jobOfferFlutterDTO) throws ExecutionException, InterruptedException;
 
